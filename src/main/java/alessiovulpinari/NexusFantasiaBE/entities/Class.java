@@ -29,6 +29,8 @@ public abstract class Class {
     // ADD Set of Proficiencies (Armor, Weapons, Tools, Skills, Saving Trows)
     // ADD Set List of starting equipments
 
+    // ADD Subclasses 
+
     @ManyToMany
     @JoinTable(
             name = "livelli_classe",

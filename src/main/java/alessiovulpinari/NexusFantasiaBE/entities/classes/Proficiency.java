@@ -30,6 +30,7 @@ public class Proficiency {
     @Column(name = "description", nullable = false)
     private String description;
 
+
     public Proficiency(ProficiencyType proficiencyType, String name, String description) {
         this.proficiencyType = proficiencyType;
         this.name = name;

@@ -43,7 +43,7 @@ public abstract class Class {
     inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     List<Equipment> equipmentList;
 
-    @OneToMany(mappedBy="class")
+    @OneToMany(mappedBy="aClass")
     private Set<Subclass> subclassSet;
 
     @ManyToMany

@@ -2,12 +2,16 @@ package alessiovulpinari.NexusFantasiaBE.entities;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
+import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
+import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
+import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.enums.Alignment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -65,23 +69,36 @@ public class CharacterSheet {
             name = "schede_classi",
             joinColumns = @JoinColumn(name = "id_scheda"),
             inverseJoinColumns = @JoinColumn(name = "id_classe"))
-    Set<Class> classList;
+    private Set<Class> classList;
 
     @ManyToMany
     @JoinTable(
             name = "schede_sottoclassi",
             joinColumns = @JoinColumn(name = "id_scheda"),
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
-    Set<Subclass> subclassSet;
+    private Set<Subclass> subclassSet;
 
-    // Set of Proficiency ?
+    /* Set of Proficiency ? */
 
     // ADD Race and Subrace
+    @ManyToOne
+    @JoinColumn(name="id_razza", nullable=false)
+    private Race race;
+
+    @ManyToOne
+    @JoinColumn(name="id_sotto_razza", nullable=false)
+    private Subrace subrace;
+
     // ADD Distribuzione Caratteristiche
     // ADD Background
     // ADD Feats
     // ADD Magic
-    // ADD Equipment
 
+    // ADD Equipment
+    @ManyToMany
+    @JoinTable(name = "schede_equipaggiamenti",
+            joinColumns = @JoinColumn(name = "id_scheda"),
+            inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
+    private List<Equipment> equipmentList;
 
 }

@@ -35,7 +35,7 @@ public class Subclass {
     }
 
     @ManyToOne
-    @JoinColumn(name="id_class", nullable=false)
+    @JoinColumn(name="id_classe", nullable=false)
     private Class aClass;
 
     @ManyToMany

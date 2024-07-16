@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.equipments;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "oggetti_avventuriero")
-public class EquipmentPack extends Equipment{
+public class EquipmentPack extends Equipment {
 
     @ManyToMany
     @JoinTable(

@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RogueLevel extends Level{
+public class RogueLevel extends Level {
 
     @Column(name = "numeri_dadi_furtivo" , nullable = false)
     private int sneakAttackNumberDice;

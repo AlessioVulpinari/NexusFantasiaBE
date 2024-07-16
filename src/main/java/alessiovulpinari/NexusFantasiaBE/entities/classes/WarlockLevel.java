@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "livelli_warlock")
-public class WarlockLevel extends Level{
+public class WarlockLevel extends Level {
 
     @Column(name = "trucchetti_conosciuti")
     private int cantripsKnown;

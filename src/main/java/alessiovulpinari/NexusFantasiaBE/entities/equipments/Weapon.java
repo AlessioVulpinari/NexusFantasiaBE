@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.equipments;
 
 import alessiovulpinari.NexusFantasiaBE.enums.DamageType;
 import alessiovulpinari.NexusFantasiaBE.enums.WeaponSubtype;
@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "armi")
-public class Weapon extends Equipment{
+public class Weapon extends Equipment {
 
     @Column(name = "numero_dadi_danno", nullable = false)
     private int numberOfDamageDice;

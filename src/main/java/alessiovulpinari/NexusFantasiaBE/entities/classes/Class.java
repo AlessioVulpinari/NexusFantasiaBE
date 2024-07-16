@@ -1,10 +1,12 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
+import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,7 +36,12 @@ public abstract class Class {
             inverseJoinColumns = @JoinColumn(name = "id_competenza"))
     Set<Proficiency> classProficiency;
 
-    // ADD Set List of starting equipments
+    // ADD List of starting equipments
+    @ManyToMany
+    @JoinTable(name = "classi_equipaggiamenti_iniziali",
+    joinColumns = @JoinColumn(name = "id_classe"),
+    inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
+    List<Equipment> equipmentList;
 
     @OneToMany(mappedBy="class")
     private Set<Subclass> subclassSet;

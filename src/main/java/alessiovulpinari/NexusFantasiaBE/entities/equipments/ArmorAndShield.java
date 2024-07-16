@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.equipments;
 
 import alessiovulpinari.NexusFantasiaBE.enums.ProtectionType;
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "armature_e_scudi")
-public class ArmorAndShield extends Equipment{
+public class ArmorAndShield extends Equipment {
 
     @Column(name = "tipo_protezione", nullable = false)
     @Enumerated(value = EnumType.STRING)

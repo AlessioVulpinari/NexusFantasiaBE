@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

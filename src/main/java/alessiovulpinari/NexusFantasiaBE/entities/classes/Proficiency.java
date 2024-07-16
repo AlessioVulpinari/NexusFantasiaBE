@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
 import alessiovulpinari.NexusFantasiaBE.enums.ProficiencyType;
 import jakarta.persistence.*;

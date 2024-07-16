@@ -1,5 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities;
 
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.enums.Alignment;
 import jakarta.persistence.*;
 import lombok.Getter;

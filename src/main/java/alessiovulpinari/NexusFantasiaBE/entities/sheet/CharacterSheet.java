@@ -105,6 +105,12 @@ public class CharacterSheet {
     private Background background;
 
     // ADD Feats
+    @ManyToMany
+    @JoinTable(name = "schede_equipaggiamenti",
+            joinColumns = @JoinColumn(name = "id_scheda"),
+            inverseJoinColumns = @JoinColumn(name = "id_talento"))
+    private Set<Feat> feats;
+
     // ADD Magic
 
     // ADD Equipment

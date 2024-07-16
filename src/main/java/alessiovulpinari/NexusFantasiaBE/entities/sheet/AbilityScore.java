@@ -16,7 +16,7 @@ import java.util.UUID;
 public class AbilityScore {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_caratteristica", nullable = false)
     private UUID abilityScoreId;
 

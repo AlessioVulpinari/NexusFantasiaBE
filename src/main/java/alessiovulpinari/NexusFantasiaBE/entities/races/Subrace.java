@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,13 +33,8 @@ public class Subrace {
     @JoinColumn(name = "id_race", nullable = false)
     private Race race;
 
-    // Lista di punti caratteristica Incrementati (HashMap)
-    @ManyToMany
-    @JoinTable(
-            name = "sotto_razze_incrementi_caratteristiche",
-            joinColumns = @JoinColumn(name = "id_sotto_razza"),
-            inverseJoinColumns = @JoinColumn(name = "id_caratteristica"))
-    private HashMap<AbilityScore, Integer> incrementedScoreMap;
+    @OneToMany(mappedBy = "subrace", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<IncrementedScore> incrementedScoreMap = new HashSet<>();
 
     // Lista di tratti razziali
     @ManyToMany
@@ -52,4 +48,15 @@ public class Subrace {
             joinColumns = @JoinColumn(name = "id_sotto_razza"),
             inverseJoinColumns = @JoinColumn(name = "id_linguaggio"))
     private Set<Languages> languages;
+
+    public Subrace(String name, String description, Race race) {
+        this.name = name;
+        this.description = description;
+        this.race = race;
+    }
+
+    public void addIncrementedScore(AbilityScore abilityScore, Integer incrementValue) {
+        IncrementedScore incrementedScore = new IncrementedScore(abilityScore, incrementValue, this);
+        this.incrementedScoreMap.add(incrementedScore);
+    }
 }

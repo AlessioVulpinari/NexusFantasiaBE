@@ -15,7 +15,7 @@ import java.util.UUID;
 public class WeaponProperty {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_tratto_arma", nullable = false)
     private UUID weaponPropertyId;
 

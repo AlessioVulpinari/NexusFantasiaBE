@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Subclass {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_sottoclasse", nullable = false)
     private UUID subclassId;
 

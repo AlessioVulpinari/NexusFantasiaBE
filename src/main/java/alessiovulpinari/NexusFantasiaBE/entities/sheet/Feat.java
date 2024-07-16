@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Feat {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_talento", nullable = false)
     private UUID featId;
 

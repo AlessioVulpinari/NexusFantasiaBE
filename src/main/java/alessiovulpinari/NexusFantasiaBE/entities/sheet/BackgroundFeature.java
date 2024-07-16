@@ -16,7 +16,7 @@ import java.util.UUID;
 public class BackgroundFeature {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "is_tratto_background", nullable = false)
     private UUID backgroundFeatureId;
 

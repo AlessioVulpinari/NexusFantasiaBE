@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Level {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_livello", nullable = false)
     private UUID levelId;
 

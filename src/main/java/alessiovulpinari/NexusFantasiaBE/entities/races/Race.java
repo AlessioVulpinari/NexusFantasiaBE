@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Race {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_razza", nullable = false)
     private UUID raceId;
 

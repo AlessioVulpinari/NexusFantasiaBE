@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Languages {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_lingua", nullable = false)
     private UUID languageId;
 

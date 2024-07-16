@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "tratti_razziali")
 public class RacialTraits {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_tratto_razziale", nullable = false)
     private UUID racialTraitId;
 

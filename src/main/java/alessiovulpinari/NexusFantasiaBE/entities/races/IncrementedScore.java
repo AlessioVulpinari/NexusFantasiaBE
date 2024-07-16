@@ -17,7 +17,7 @@ import java.util.UUID;
 public class IncrementedScore {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_incremento", nullable = false)
     private UUID id;
 

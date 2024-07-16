@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Equipment {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_equipaggiamento", nullable = false)
     private UUID equipmentId;
 

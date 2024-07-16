@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Subrace {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_sotto_razza", nullable = false)
     private UUID subRaceId;
 

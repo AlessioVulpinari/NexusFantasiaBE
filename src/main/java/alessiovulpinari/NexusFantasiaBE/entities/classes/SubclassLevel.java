@@ -15,7 +15,7 @@ import java.util.UUID;
 public class SubclassLevel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_livello_sottoclasse", nullable = false)
     private UUID subclassLevelId;
 

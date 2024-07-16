@@ -25,7 +25,7 @@ import java.util.UUID;
 public class CharacterSheet {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_scheda_personaggio", nullable = false)
     private UUID characterSheetId;
 

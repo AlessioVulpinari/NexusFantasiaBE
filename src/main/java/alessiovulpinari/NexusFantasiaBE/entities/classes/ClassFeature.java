@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ClassFeature {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_tratto_classe" , nullable = false)
     private UUID classFeatureId;
 

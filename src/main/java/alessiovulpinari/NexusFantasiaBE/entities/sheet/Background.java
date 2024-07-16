@@ -17,7 +17,7 @@ import java.util.*;
 public class Background {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_background", nullable = false)
     private UUID backgroundId;
 

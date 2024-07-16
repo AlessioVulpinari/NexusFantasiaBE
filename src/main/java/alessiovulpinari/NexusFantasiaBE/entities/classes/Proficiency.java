@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Proficiency {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_competenze", nullable = false)
     private UUID proficiencyId;
 

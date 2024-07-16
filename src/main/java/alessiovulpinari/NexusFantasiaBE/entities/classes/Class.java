@@ -18,7 +18,7 @@ import java.util.UUID;
 public abstract class Class {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_classe", nullable = false)
     private UUID classId;
 

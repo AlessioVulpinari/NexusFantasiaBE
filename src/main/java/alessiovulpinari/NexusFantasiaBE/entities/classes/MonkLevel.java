@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "livelli_monaco")
+//@Table(name = "livelli_monaco")
 public class MonkLevel extends Level {
 
     @Column(name = "arte_marziale")

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,6 +15,11 @@ import java.util.HashMap;
 @Entity
 @Table(name = "razze")
 public class Race {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id_razza", nullable = false)
+    private UUID raceId;
 
     @Column(name = "età", nullable = false)
     private String ageDescription;
@@ -26,7 +32,7 @@ public class Race {
 
     @Column(name = "velocità", nullable = false)
     private int speed;
-    
+
     // Lista di punti caratteristica Incrementati (HashMap)
     @JoinTable(
             name = "razze_incrementi_caratteristiche",

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "competenze_abilità")
+//@Table(name = "competenze_abilità")
 public class SkillProficiency extends Proficiency {
 
     public SkillProficiency( String name, String description) {

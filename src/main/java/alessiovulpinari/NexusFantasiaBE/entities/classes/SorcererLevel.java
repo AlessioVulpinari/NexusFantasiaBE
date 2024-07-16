@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "livelli_stregone")
+//@Table(name = "livelli_stregone")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "oggetti_avventuriero")
+//@Table(name = "oggetti_avventuriero")
 public class EquipmentPack extends Equipment {
 
     @ManyToMany

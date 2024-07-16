@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "livelli_warlock")
+//@Table(name = "livelli_warlock")
 public class WarlockLevel extends Level {
 
     @Column(name = "trucchetti_conosciuti")

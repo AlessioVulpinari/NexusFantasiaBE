@@ -23,7 +23,7 @@ public class SubclassLevel {
     private int levelNumber;
 
     @OneToOne
-    @Column(name = "tratto_sottoclasse")
+    @PrimaryKeyJoinColumn(name = "tratto_sottoclasse")
     private ClassFeature classFeature;
 
     public SubclassLevel(int levelNumber, ClassFeature classFeature) {

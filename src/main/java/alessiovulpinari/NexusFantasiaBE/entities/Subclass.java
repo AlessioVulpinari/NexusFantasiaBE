@@ -27,11 +27,16 @@ public class Subclass {
     @Column(name = "descrizione_sottoclasse", nullable = false)
     private String description;
 
-    public Subclass(String name, String description) {
+    public Subclass(String name, String description, Class aClass) {
         this.name = name;
         this.description = description;
         this.subClassLevels = new HashSet<>();
+        this.aClass = aClass;
     }
+
+    @ManyToOne
+    @JoinColumn(name="id_class", nullable=false)
+    private Class aClass;
 
     @ManyToMany
     @JoinTable(

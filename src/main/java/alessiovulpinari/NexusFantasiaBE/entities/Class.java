@@ -26,10 +26,18 @@ public abstract class Class {
     @Column(name = "dadi_vita", nullable = false)
     private int hitDice;
 
-    // ADD Set of Proficiencies (Armor, Weapons, Tools, Skills, Saving Trows)
+    // Set of Proficiencies (Armor, Weapons, Tools, Skills, Saving Trows)
+    @ManyToMany
+    @JoinTable(
+            name = "classe_competenze",
+            joinColumns = @JoinColumn(name = "id_classe"),
+            inverseJoinColumns = @JoinColumn(name = "id_competenza"))
+    Set<Proficiency> classProficiency;
+
     // ADD Set List of starting equipments
 
-    // ADD Subclasses 
+    @OneToMany(mappedBy="class")
+    private Set<Subclass> subclassSet;
 
     @ManyToMany
     @JoinTable(

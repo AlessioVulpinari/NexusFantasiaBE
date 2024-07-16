@@ -22,6 +22,7 @@ public class CharacterSheet {
     private UUID characterSheetId;
 
     @Column(name = "allineamento")
+    @Enumerated(value = EnumType.STRING)
     private Alignment alignment;
 
     @Column(name = "nome")
@@ -71,8 +72,9 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
     Set<Subclass> subclassSet;
 
+    // Set of Proficiency ?
 
-    // ADD Race and Subrac
+    // ADD Race and Subrace
     // ADD Distribuzione Caratteristiche
     // ADD Background
     // ADD Feats

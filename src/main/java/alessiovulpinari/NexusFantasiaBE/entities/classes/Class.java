@@ -34,14 +34,14 @@ public abstract class Class {
             name = "classe_competenze",
             joinColumns = @JoinColumn(name = "id_classe"),
             inverseJoinColumns = @JoinColumn(name = "id_competenza"))
-    Set<Proficiency> classProficiency;
+    private Set<Proficiency> classProficiency;
 
     // ADD List of starting equipments
     @ManyToMany
     @JoinTable(name = "classi_equipaggiamenti_iniziali",
     joinColumns = @JoinColumn(name = "id_classe"),
     inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
-    List<Equipment> equipmentList;
+    private List<Equipment> equipmentList;
 
     @OneToMany(mappedBy="aClass")
     private Set<Subclass> subclassSet;
@@ -51,6 +51,6 @@ public abstract class Class {
             name = "livelli_classe",
             joinColumns = @JoinColumn(name = "id_classe"),
             inverseJoinColumns = @JoinColumn(name = "id_livello"))
-    Set<Level> classLevels;
+    private Set<Level> classLevels;
 
 }

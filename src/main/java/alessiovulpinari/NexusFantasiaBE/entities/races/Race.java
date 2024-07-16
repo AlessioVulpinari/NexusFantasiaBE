@@ -1,6 +1,6 @@
 package alessiovulpinari.NexusFantasiaBE.entities.races;
 
-import alessiovulpinari.NexusFantasiaBE.entities.AbilityScore;
+import alessiovulpinari.NexusFantasiaBE.entities.sheet.AbilityScore;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import jakarta.persistence.*;
 import lombok.Getter;

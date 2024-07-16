@@ -1,4 +1,4 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.sheet;
 
 import jakarta.persistence.*;
 import lombok.Getter;

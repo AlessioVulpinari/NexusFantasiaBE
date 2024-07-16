@@ -1,10 +1,12 @@
-package alessiovulpinari.NexusFantasiaBE.entities;
+package alessiovulpinari.NexusFantasiaBE.entities.sheet;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
+import alessiovulpinari.NexusFantasiaBE.enums.AbilityScoreDistribution;
 import alessiovulpinari.NexusFantasiaBE.enums.Alignment;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -64,6 +66,10 @@ public class CharacterSheet {
     @Column(name = "difetti")
     private String flaw;
 
+    // ADD Distribuzione Caratteristiche
+    @Column(name = "distribuzione_caratteristiche")
+    private AbilityScoreDistribution abilityScoreDistribution;
+
     @ManyToMany
     @JoinTable(
             name = "schede_classi",
@@ -78,19 +84,26 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
     private Set<Subclass> subclassSet;
 
-    /* Set of Proficiency ? */
+    // Set of Proficiency
+    @ManyToMany
+    @JoinTable(name = "schede_competenze", joinColumns = @JoinColumn(name = "id_scheda"),
+    inverseJoinColumns = @JoinColumn(name = "id_competenza"))
+    private Set<Proficiency> proficiencies;
 
     // ADD Race and Subrace
     @ManyToOne
-    @JoinColumn(name="id_razza", nullable=false)
+    @JoinColumn(name="id_razza")
     private Race race;
 
     @ManyToOne
-    @JoinColumn(name="id_sotto_razza", nullable=false)
+    @JoinColumn(name="id_sotto_razza")
     private Subrace subrace;
 
-    // ADD Distribuzione Caratteristiche
     // ADD Background
+    @ManyToOne
+    @JoinColumn(name = "id_background")
+    private Background background;
+
     // ADD Feats
     // ADD Magic
 

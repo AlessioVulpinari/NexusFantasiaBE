@@ -4,6 +4,7 @@ import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
+import alessiovulpinari.NexusFantasiaBE.entities.magics.Magic;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.enums.AbilityScoreDistribution;
@@ -13,9 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -70,6 +69,7 @@ public class CharacterSheet {
     @Column(name = "distribuzione_caratteristiche")
     private AbilityScoreDistribution abilityScoreDistribution;
 
+    // Classi
     @ManyToMany
     @JoinTable(
             name = "schede_classi",
@@ -77,6 +77,7 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_classe"))
     private Set<Class> classList;
 
+    // Sottoclassi
     @ManyToMany
     @JoinTable(
             name = "schede_sottoclassi",
@@ -90,11 +91,12 @@ public class CharacterSheet {
     inverseJoinColumns = @JoinColumn(name = "id_competenza"))
     private Set<Proficiency> proficiencies;
 
-    // ADD Race and Subrace
+    // ADD Race
     @ManyToOne
     @JoinColumn(name="id_razza")
     private Race race;
 
+    // And Subrace
     @ManyToOne
     @JoinColumn(name="id_sotto_razza")
     private Subrace subrace;
@@ -112,6 +114,11 @@ public class CharacterSheet {
     private Set<Feat> feats;
 
     // ADD Magic
+    @ManyToMany
+    @JoinTable(name = "schede_magie",
+            joinColumns = @JoinColumn(name = "id_scheda"),
+            inverseJoinColumns = @JoinColumn(name = "id_magia"))
+    private Set<Magic> magics;
 
     // ADD Equipment
     @ManyToMany
@@ -120,4 +127,13 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     private List<Equipment> equipmentList;
 
+    public CharacterSheet(String name) {
+        this.name = name;
+        this.classList = new HashSet<>();
+        this.subclassSet = new HashSet<>();
+        this.proficiencies = new HashSet<>();
+        this.feats = new HashSet<>();
+        this.magics = new HashSet<>();
+        this.equipmentList = new ArrayList<>();
+    }
 }

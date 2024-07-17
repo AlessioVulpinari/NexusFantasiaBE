@@ -27,21 +27,17 @@ public class Subclass {
     @Column(name = "descrizione_sottoclasse", nullable = false)
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name="id_classe", nullable=false)
+    private Class aClass;
+
+    @OneToMany(mappedBy = "subclass")
+    private Set<SubclassLevel> subClassLevels;
+
     public Subclass(String name, String description, Class aClass) {
         this.name = name;
         this.description = description;
         this.subClassLevels = new HashSet<>();
         this.aClass = aClass;
     }
-
-    @ManyToOne
-    @JoinColumn(name="id_classe", nullable=false)
-    private Class aClass;
-
-    @ManyToMany
-    @JoinTable(
-            name = "sottoclassi_livelli",
-            joinColumns = @JoinColumn(name = "id_sottoclasse"),
-            inverseJoinColumns = @JoinColumn(name = "id_livello"))
-    Set<SubclassLevel> subClassLevels;
 }

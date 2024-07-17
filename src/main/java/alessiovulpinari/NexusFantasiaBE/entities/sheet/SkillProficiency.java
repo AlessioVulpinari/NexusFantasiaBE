@@ -15,11 +15,12 @@ import lombok.Setter;
 @Entity
 public class SkillProficiency extends Proficiency {
 
-    public SkillProficiency( String name, String description) {
-        super(ProficiencyType.SKILLS, name, description);
-    }
-
     @ManyToOne
     @JoinColumn(name = "id_caratteristica")
     private AbilityScore abilityScore;
+
+    public SkillProficiency( String name, String description, AbilityScore abilityScore) {
+        super(ProficiencyType.SKILLS, name, description);
+        this.abilityScore = abilityScore;
+    }
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-//@Table(name = "livelli_ladro")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,4 +17,10 @@ public class RogueLevel extends Level {
     private int sneakAttackNumberDice;
     @Column(name = "numeri_dadi_danno_furtivo" , nullable = false)
     private int sneakAttackDamageDice;
+
+    public RogueLevel(int levelNumber, int proficiencyBonus, Class aClass, int sneakAttackNumberDice, int sneakAttackDamageDice) {
+        super(levelNumber, proficiencyBonus, aClass);
+        this.sneakAttackNumberDice = sneakAttackNumberDice;
+        this.sneakAttackDamageDice = sneakAttackDamageDice;
+    }
 }

@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -24,6 +22,9 @@ public abstract class Class {
 
     @Column(name = "nome", nullable = false)
     private String className;
+
+    @Column(name = "livello_per_sotto_classe")
+    private int levelForSubClass;
 
     @Column(name = "dadi_vita", nullable = false)
     private int hitDice;
@@ -43,14 +44,21 @@ public abstract class Class {
     inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     private List<Equipment> equipmentList;
 
+    // Sotto classi
     @OneToMany(mappedBy="aClass")
     private Set<Subclass> subclassSet;
 
-    @ManyToMany
-    @JoinTable(
-            name = "livelli_classe",
-            joinColumns = @JoinColumn(name = "id_classe"),
-            inverseJoinColumns = @JoinColumn(name = "id_livello"))
+    // Livelli della Classe
+    @OneToMany(mappedBy = "aClass")
     private Set<Level> classLevels;
 
+    public Class(String className, int hitDice, int levelForSubClass) {
+        this.className = className;
+        this.hitDice = hitDice;
+        this.levelForSubClass = levelForSubClass;
+        this.classProficiency = new HashSet<>();
+        this.equipmentList = new ArrayList<>();
+        this.subclassSet = new HashSet<>();
+        this.classLevels = new HashSet<>();
+    }
 }

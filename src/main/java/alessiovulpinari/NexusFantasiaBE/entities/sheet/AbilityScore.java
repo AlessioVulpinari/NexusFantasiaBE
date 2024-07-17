@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -28,4 +29,10 @@ public class AbilityScore {
 
     @OneToMany(mappedBy = "abilityScore")
     private Set<SkillProficiency> proficiencySet;
+
+    public AbilityScore(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.proficiencySet = new HashSet<>();
+    }
 }

@@ -52,6 +52,8 @@ public class Subrace {
         this.name = name;
         this.description = description;
         this.race = race;
+        this.racialTraits = new HashSet<>();
+        this.languages = new HashSet<>();
     }
 
     public void addIncrementedScore(AbilityScore abilityScore, Integer incrementValue) {

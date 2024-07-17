@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "livelli_monaco")
 public class MonkLevel extends Level {
 
     @Column(name = "arte_marziale")
@@ -23,8 +22,8 @@ public class MonkLevel extends Level {
     @Column(name = "movimento_senza_armatura")
     private double unarmedMovement;
 
-    public MonkLevel(int levelNumber, int proficiencyBonus, int martialArt, int kiPoints, double unarmedMovement) {
-        super(levelNumber, proficiencyBonus);
+    public MonkLevel(int levelNumber, int proficiencyBonus, Class aClass, int martialArt, int kiPoints, double unarmedMovement) {
+        super(levelNumber, proficiencyBonus, aClass);
         this.martialArt = martialArt;
         this.kiPoints = kiPoints;
         this.unarmedMovement = unarmedMovement;

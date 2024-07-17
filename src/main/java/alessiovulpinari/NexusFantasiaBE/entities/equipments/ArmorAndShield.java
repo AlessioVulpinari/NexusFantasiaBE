@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "armature_e_scudi")
 public class ArmorAndShield extends Equipment {
 
     @Column(name = "tipo_protezione", nullable = false)

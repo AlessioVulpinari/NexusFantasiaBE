@@ -27,11 +27,9 @@ public class Level {
     @Column(name = "bonus_competenza", nullable = false)
     private int proficiencyBonus;
 
-    public Level(int levelNumber, int proficiencyBonus) {
-        this.levelNumber = levelNumber;
-        this.proficiencyBonus = proficiencyBonus;
-        this.classFeatures = new HashSet<>();
-    }
+    @ManyToOne
+    @JoinColumn(name="id_classe")
+    private Class aClass;
 
     @ManyToMany
     @JoinTable(
@@ -39,4 +37,11 @@ public class Level {
             joinColumns = @JoinColumn(name = "id_livello"),
             inverseJoinColumns = @JoinColumn(name = "id_tratto"))
     Set<ClassFeature> classFeatures;
+
+    public Level(int levelNumber, int proficiencyBonus, Class aClass) {
+        this.levelNumber = levelNumber;
+        this.aClass = aClass;
+        this.proficiencyBonus = proficiencyBonus;
+        this.classFeatures = new HashSet<>();
+    }
 }

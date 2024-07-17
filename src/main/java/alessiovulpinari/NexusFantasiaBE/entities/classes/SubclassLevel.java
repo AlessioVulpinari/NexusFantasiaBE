@@ -26,8 +26,13 @@ public class SubclassLevel {
     @PrimaryKeyJoinColumn(name = "tratto_sottoclasse")
     private ClassFeature classFeature;
 
-    public SubclassLevel(int levelNumber, ClassFeature classFeature) {
+    @ManyToOne
+    @JoinColumn(name="id_sotto_classe")
+    private Subclass subclass;
+
+    public SubclassLevel(int levelNumber, ClassFeature classFeature, Subclass subclass) {
         this.levelNumber = levelNumber;
         this.classFeature = classFeature;
+        this.subclass = subclass;
     }
 }

@@ -1,6 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities.sheet;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Level;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
@@ -85,6 +86,12 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
     private Set<Subclass> subclassSet;
 
+    // Livelli
+    @ManyToMany
+    @JoinTable(name = "schede_livelli", joinColumns = @JoinColumn(name = "id_scheda"),
+    inverseJoinColumns = @JoinColumn(name = "id_livello"))
+    private Set<Level> levels;
+
     // Set of Proficiency
     @ManyToMany
     @JoinTable(name = "schede_competenze", joinColumns = @JoinColumn(name = "id_scheda"),
@@ -135,5 +142,6 @@ public class CharacterSheet {
         this.feats = new HashSet<>();
         this.magics = new HashSet<>();
         this.equipmentList = new ArrayList<>();
+        this.levels = new HashSet<>();
     }
 }

@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "contenitori")
 public class Container extends Equipment {
 
     @Column(name = "capacità")

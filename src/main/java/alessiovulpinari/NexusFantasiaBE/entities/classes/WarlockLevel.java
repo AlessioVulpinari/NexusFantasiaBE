@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "livelli_warlock")
 public class WarlockLevel extends Level {
 
     @Column(name = "trucchetti_conosciuti")
@@ -29,8 +28,8 @@ public class WarlockLevel extends Level {
     @Column(name = "invocazioni_conosciute")
     private int invocationsKnown;
 
-    public WarlockLevel(int levelNumber, int proficiencyBonus, int cantripsKnown, int spellsKnown, int spellSlots, int slotLevel, int invocationsKnown) {
-        super(levelNumber, proficiencyBonus);
+    public WarlockLevel(int levelNumber, int proficiencyBonus, Class aClass, int cantripsKnown, int spellsKnown, int spellSlots, int slotLevel, int invocationsKnown) {
+        super(levelNumber, proficiencyBonus, aClass);
         this.cantripsKnown = cantripsKnown;
         this.spellsKnown = spellsKnown;
         this.spellSlots = spellSlots;

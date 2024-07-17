@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "armi")
 public class Weapon extends Equipment {
 
     @Column(name = "numero_dadi_danno", nullable = false)

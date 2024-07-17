@@ -47,8 +47,8 @@ public class CasterLevel extends Level {
     @Column(name = "slot_magie_nono_livello")
     private int ninthSlotSpell;
 
-    public CasterLevel(int levelNumber, int proficiencyBonus, int cantripsKnown, int spellsKnown, int fistSlotSpell, int secondSlotSpell, int thirdSlotSpell, int fourthSlotSpell, int fifthSlotSpell, int sixthSlotSpell, int seventhSlotSpell, int eighthSlotSpell, int ninthSlotSpell) {
-        super(levelNumber, proficiencyBonus);
+    public CasterLevel(int levelNumber, int proficiencyBonus, Class aClass, int cantripsKnown, int spellsKnown, int fistSlotSpell, int secondSlotSpell, int thirdSlotSpell, int fourthSlotSpell, int fifthSlotSpell, int sixthSlotSpell, int seventhSlotSpell, int eighthSlotSpell, int ninthSlotSpell) {
+        super(levelNumber, proficiencyBonus, aClass);
         this.cantripsKnown = cantripsKnown;
         this.spellsKnown = spellsKnown;
         this.fistSlotSpell = fistSlotSpell;
@@ -61,4 +61,5 @@ public class CasterLevel extends Level {
         this.eighthSlotSpell = eighthSlotSpell;
         this.ninthSlotSpell = ninthSlotSpell;
     }
+
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "ruolo")
 @NoArgsConstructor
@@ -14,9 +16,9 @@ import lombok.Setter;
 public class UserRole {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ruolo", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "nome")
     private String name;

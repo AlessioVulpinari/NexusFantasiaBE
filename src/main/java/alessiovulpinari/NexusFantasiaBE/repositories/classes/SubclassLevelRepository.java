@@ -1,6 +1,6 @@
 package alessiovulpinari.NexusFantasiaBE.repositories.classes;
 
-import alessiovulpinari.NexusFantasiaBE.entities.classes.SubclassLevel;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

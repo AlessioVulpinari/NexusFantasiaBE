@@ -1,5 +1,7 @@
-package alessiovulpinari.NexusFantasiaBE.entities.classes;
+package alessiovulpinari.NexusFantasiaBE.entities.classes.levels;
 
+import alessiovulpinari.NexusFantasiaBE.entities.classes.ClassFeature;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

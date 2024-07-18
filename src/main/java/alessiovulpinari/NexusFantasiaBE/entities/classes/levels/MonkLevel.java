@@ -1,8 +1,8 @@
-package alessiovulpinari.NexusFantasiaBE.entities.classes;
+package alessiovulpinari.NexusFantasiaBE.entities.classes.levels;
 
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

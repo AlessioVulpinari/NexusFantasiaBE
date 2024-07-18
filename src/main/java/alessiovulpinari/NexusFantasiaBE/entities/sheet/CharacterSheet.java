@@ -1,7 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities.sheet;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
-import alessiovulpinari.NexusFantasiaBE.entities.classes.Level;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;

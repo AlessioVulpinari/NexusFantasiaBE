@@ -1,6 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities.magics;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.enums.MagicSchool;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -63,6 +64,12 @@ public class Magic {
             inverseJoinColumns = @JoinColumn(name = "id_classe"))
     private Set<Class> spellList;
 
+    @ManyToMany
+    @JoinTable(name = "magie_sotto_classi",
+            joinColumns = @JoinColumn(name = "id_magia"),
+            inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
+    private Set<Subclass> subClassSpellList;
+
     public Magic(String name, String description, int level, MagicSchool magicSchool, String castingTime, String range, String duration, String atHigherLevels, Boolean isRitual) {
         this.name = name;
         this.description = description;
@@ -75,5 +82,6 @@ public class Magic {
         this.isRitual = isRitual;
         this.magicComponents = new HashSet<>();
         this.spellList = new HashSet<>();
+        this.subClassSpellList = new HashSet<>();
     }
 }

@@ -13,7 +13,7 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "classi")
-public abstract class Class {
+public class Class {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +51,8 @@ public abstract class Class {
     // Livelli della Classe
     @OneToMany(mappedBy = "aClass")
     private Set<Level> classLevels;
+
+    //TODO aggiungere la lista di magie ?
 
     public Class(String className, int hitDice, int levelForSubClass) {
         this.className = className;

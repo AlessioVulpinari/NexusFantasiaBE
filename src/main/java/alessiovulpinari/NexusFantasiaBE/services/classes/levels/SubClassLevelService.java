@@ -1,10 +1,9 @@
 package alessiovulpinari.NexusFantasiaBE.services.classes.levels;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.ClassFeature;
-import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
-import alessiovulpinari.NexusFantasiaBE.payloads.classes.levels.LevelDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.levels.SubClassLevelDTO;
 import alessiovulpinari.NexusFantasiaBE.repositories.classes.SubclassLevelRepository;
 import alessiovulpinari.NexusFantasiaBE.services.classes.ClassFeatureService;
@@ -40,19 +39,26 @@ public class SubClassLevelService {
         return subclassLevelRepository.findById(uuid).orElseThrow(() -> new NotFoundException("Livello con questo id non trovata!"));
     }
 
-    //TODO AGGIUNGERE LA FUNZIONE PER MODIFICARE LA SOTTOCLASSE
+    public SubclassLevel saveClassLevel(SubClassLevelDTO body) {
+
+        ClassFeature foundClassFeature = this.classFeatureService.findByFeatureName(body.classFeature());
+        Subclass foundClass = this.subclassService.findByName(body.subClassName());
+        SubclassLevel newSubclassLevel = new SubclassLevel(body.levelNumber(), foundClassFeature, foundClass);
+
+        return subclassLevelRepository.save(newSubclassLevel);
+    }
+
 
     public SubclassLevel findByIdAndUpdate(UUID levelId, SubClassLevelDTO body)
     {
         SubclassLevel found = this.getLevelById(levelId);
 
-        //TODO aggiungere il find by name nella classFeatureService
-       // ClassFeature foundClassFeature = this.classFeatureService
+        ClassFeature foundClassFeature = this.classFeatureService.findByFeatureName(body.classFeature());
+        Subclass foundClass = this.subclassService.findByName(body.subClassName());
 
         found.setLevelNumber(body.levelNumber());
-
-        //TODO fare il service della sottoclasse
-        // found.setSubclass(this.);
+        found.setClassFeature(foundClassFeature);
+        found.setSubclass(foundClass);
 
         return subclassLevelRepository.save(found);
     }

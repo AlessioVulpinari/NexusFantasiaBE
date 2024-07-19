@@ -53,4 +53,8 @@ public class ClassFeatureService {
         this.classFeatureRepository.delete(found);
     }
 
+    public ClassFeature findByFeatureName(String classFeatureName) {
+        return this.classFeatureRepository.findByClassFeatureName(classFeatureName).orElseThrow(() -> new NotFoundException("Nessuno tratto con questo nome: " + classFeatureName + " trovato!"));
+    }
+
 }

@@ -63,5 +63,9 @@ public class SubclassService {
         this.subclassRepository.delete(found);
     }
 
+    public Subclass findByName(String subclassName) {
+        return subclassRepository.findByName(subclassName).orElseThrow(() -> new NotFoundException("Sotto classe con nome: " + subclassName + " non trovata!"));
+    }
+
 
 }

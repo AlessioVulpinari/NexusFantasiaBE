@@ -55,6 +55,7 @@ public class CasterLevelService {
         level.setProficiencyBonus(body.proficiencyBonus());
         level.setAClass(aClass);
         level.setCantripsKnown(body.cantripsKnown());
+        level.setSpellsKnown(body.spellsKnown());
         level.setFistSlotSpell(body.fistSlotSpell());
         level.setSecondSlotSpell(body.secondSlotSpell() == null ? 0 : body.secondSlotSpell());
         level.setThirdSlotSpell(body.thirdSlotSpell() == null ? 0 : body.thirdSlotSpell());

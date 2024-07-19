@@ -25,12 +25,12 @@ public class Equipment {
     private String description;
 
     @Column(name = "peso", nullable = false)
-    private String weight;
+    private double weight;
 
     @Column(name = "costo", nullable = false)
-    private String cost;
+    private double cost;
 
-    public Equipment(String name, String description, String weight, String cost) {
+    public Equipment(String name, String description, double weight, double cost) {
         this.name = name;
         this.description = description;
         this.weight = weight;

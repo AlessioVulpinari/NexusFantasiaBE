@@ -16,7 +16,7 @@ public class Container extends Equipment {
     @Column(name = "capacità")
     private String capacity;
 
-    public Container(String name, String description, String weight, String cost, String capacity) {
+    public Container(String name, String description, double weight, double cost, String capacity) {
         super(name, description, weight, cost);
         this.capacity = capacity;
     }

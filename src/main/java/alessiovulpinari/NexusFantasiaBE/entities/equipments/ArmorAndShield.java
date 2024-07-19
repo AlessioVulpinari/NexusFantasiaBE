@@ -25,7 +25,7 @@ public class ArmorAndShield extends Equipment {
     @Column(name = "svantaggio_su_furtivo")
     private boolean stealthDisadvantage;
 
-    public ArmorAndShield(String name, String description, String weight, String cost, ProtectionType protectionType, int armorClass, int strengthRequired, boolean stealthDisadvantage) {
+    public ArmorAndShield(String name, String description, double weight, double cost, ProtectionType protectionType, int armorClass, int strengthRequired, boolean stealthDisadvantage) {
         super(name, description, weight, cost);
         this.protectionType = protectionType;
         this.armorClass = armorClass;

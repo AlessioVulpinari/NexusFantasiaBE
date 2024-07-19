@@ -43,7 +43,7 @@ public class Weapon extends Equipment {
             inverseJoinColumns = @JoinColumn(name = "id_tratto-arma"))
     Set<WeaponProperty> weaponProperties;
 
-    public Weapon(String name, String description, String weight, String cost, int numberOfDamageDice, int damageDice, WeaponType weaponType, WeaponSubtype weaponSubtype, DamageType damageType) {
+    public Weapon(String name, String description, double weight, double cost, int numberOfDamageDice, int damageDice, WeaponType weaponType, WeaponSubtype weaponSubtype, DamageType damageType) {
         super(name, description, weight, cost);
         this.numberOfDamageDice = numberOfDamageDice;
         this.damageDice = damageDice;

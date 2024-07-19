@@ -21,7 +21,7 @@ public class EquipmentPack extends Equipment {
             inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     private List<Equipment> equipmentList;
 
-    public EquipmentPack(String name, String description, String weight, String cost) {
+    public EquipmentPack(String name, String description, double weight, double cost) {
         super(name, description, weight, cost);
         this.equipmentList = new ArrayList<>();
     }

@@ -25,4 +25,12 @@ public class EquipmentPack extends Equipment {
         super(name, description, weight, cost);
         this.equipmentList = new ArrayList<>();
     }
+
+    public void addEquipToList(Equipment equipment) {
+        this.equipmentList.add(equipment);
+    }
+
+    public void removeEquipToList(Equipment equipment) {
+        this.equipmentList.remove(equipment);
+    }
 }

@@ -23,6 +23,9 @@ public class Race {
     @Column(name = "id_razza", nullable = false)
     private UUID raceId;
 
+    @Column(name = "nome", nullable = false)
+    private String name;
+
     @Column(name = "età", nullable = false)
     private String ageDescription;
 
@@ -61,7 +64,8 @@ public class Race {
             inverseJoinColumns = @JoinColumn(name = "id_competenza") )
     private Set<Proficiency> proficiencies;
 
-    public Race(String ageDescription, String alignmentDescription, String sizeDescription, int speed) {
+    public Race(String name ,String ageDescription, String alignmentDescription, String sizeDescription, int speed) {
+        this.name = name;
         this.ageDescription = ageDescription;
         this.alignmentDescription = alignmentDescription;
         this.sizeDescription = sizeDescription;

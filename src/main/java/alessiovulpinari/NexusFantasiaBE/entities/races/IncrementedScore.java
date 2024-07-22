@@ -29,15 +29,15 @@ public class IncrementedScore {
     private Integer incrementValue;
 
     @ManyToOne
-    @JoinColumn(name = "id_sotto_razza", nullable = false)
+    @JoinColumn(name = "id_sotto_razza")
     private Subrace subrace;
 
     @ManyToOne
-    @JoinColumn(name = "id_razza", nullable = false)
+    @JoinColumn(name = "id_razza")
     private Race race;
 
     @ManyToOne
-    @JoinColumn(name = "id_talento", nullable = false)
+    @JoinColumn(name = "id_talento")
     private Feat feat;
 
     public IncrementedScore(AbilityScore abilityScore, Integer incrementValue, Subrace subrace) {

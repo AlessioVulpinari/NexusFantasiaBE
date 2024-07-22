@@ -62,7 +62,7 @@ public class MagicService {
         this.magicRepository.delete(found);
     }
 
-    public Magic findByComponentName(String name){
+    public Magic findByMagicName(String name){
         return this.magicRepository.findByName(name).orElseThrow(() -> new NotFoundException("Magia con nome: " + name + " non trovata!"));
     }
 

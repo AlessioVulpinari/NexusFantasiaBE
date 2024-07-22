@@ -1,15 +1,11 @@
 package alessiovulpinari.NexusFantasiaBE.services.races;
 
-import alessiovulpinari.NexusFantasiaBE.entities.magics.Magic;
 import alessiovulpinari.NexusFantasiaBE.entities.races.IncrementedScore;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.AbilityScore;
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.Feat;
-import alessiovulpinari.NexusFantasiaBE.enums.MagicSchool;
-import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
-import alessiovulpinari.NexusFantasiaBE.payloads.magics.MagicDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.races.IncrementedScoreFeatDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.races.IncrementedScoreRaceDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.races.IncrementedScoreSubRaceDTO;
@@ -79,7 +75,47 @@ public class IncrementedScoreService {
         return incrementedScoreRepository.save(incrementedScore);
     }
 
-    //TODO aggiungere metodo per modificare (PUT)
+    public IncrementedScore findByIdAndUpdateRace(UUID incrementedScoreId, IncrementedScoreRaceDTO body) {
+
+        IncrementedScore found = getIncrementedScoreById(incrementedScoreId);
+        AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
+        Race race = raceService.findByName(body.raceName());
+        found.setAbilityScore(abilityScore);
+        found.setIncrementValue(body.incrementValue());
+        found.setRace(race);
+        found.setFeat(null);
+        found.setSubrace(null);
+
+        return incrementedScoreRepository.save(found);
+    }
+
+    public IncrementedScore findByIdAndUpdateSubRace(UUID incrementedScoreId, IncrementedScoreSubRaceDTO body) {
+
+        IncrementedScore found = getIncrementedScoreById(incrementedScoreId);
+        AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
+        Subrace race = subRaceService.findByName(body.subRaceName());
+        found.setAbilityScore(abilityScore);
+        found.setIncrementValue(body.incrementValue());
+        found.setSubrace(race);
+        found.setFeat(null);
+        found.setRace(null);
+
+        return incrementedScoreRepository.save(found);
+    }
+
+    public IncrementedScore findByIdAndUpdateFeat(UUID incrementedScoreId, IncrementedScoreFeatDTO body) {
+
+        IncrementedScore found = getIncrementedScoreById(incrementedScoreId);
+        AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
+        Feat feat = featService.findByName(body.featName());
+        found.setAbilityScore(abilityScore);
+        found.setIncrementValue(body.incrementValue());
+        found.setSubrace(null);
+        found.setFeat(feat);
+        found.setRace(null);
+
+        return incrementedScoreRepository.save(found);
+    }
 
     public void findByIdAndDelete(UUID incrementedScoreId) {
         IncrementedScore found = getIncrementedScoreById(incrementedScoreId);

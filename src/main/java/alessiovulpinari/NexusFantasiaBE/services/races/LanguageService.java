@@ -32,7 +32,7 @@ public class LanguageService {
 
     public Languages saveLanguage(LanguageDTO body) {
         this.languageRepository.findByName(body.name()).ifPresent
-                (aClass -> {throw new BadRequestException("Esiste già un linguaggio con questo nome: " + body.name());});
+                (language -> {throw new BadRequestException("Esiste già un linguaggio con questo nome: " + body.name());});
 
         Languages languages = new Languages(body.name(), body.description());
         return  this.languageRepository.save(languages);

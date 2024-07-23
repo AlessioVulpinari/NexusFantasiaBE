@@ -36,7 +36,7 @@ public class SubRaceService {
 
     public Subrace saveSubRace(SubRaceDTO body) {
         this.subraceRepository.findByName(body.name()).ifPresent
-                (aClass -> {throw new BadRequestException("Esiste già una sotto razza con questo nome: " + body.name());});
+                (subrace -> {throw new BadRequestException("Esiste già una sotto razza con questo nome: " + body.name());});
 
         Race race = raceService.findByName(body.raceName());
 

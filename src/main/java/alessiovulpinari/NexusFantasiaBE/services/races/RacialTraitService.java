@@ -35,7 +35,7 @@ public class RacialTraitService {
 
     public RacialTraits saveRacialTrait(RacialTraitDTO body) {
         this.racialTraitRepository.findByName(body.name()).ifPresent
-                (aClass -> {throw new BadRequestException("Esiste già un tratto razziale con questo nome: " + body.name());});
+                (trait -> {throw new BadRequestException("Esiste già un tratto razziale con questo nome: " + body.name());});
 
        RacialTraits trait = new RacialTraits(body.name(), body.description());
 

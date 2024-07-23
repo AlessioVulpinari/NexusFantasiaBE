@@ -32,7 +32,7 @@ public class RaceService {
 
     public Race saveRace(RaceDTO body) {
         this.raceRepository.findByName(body.name()).ifPresent
-                (aClass -> {throw new BadRequestException("Esiste già una razza con questo nome: " + body.name());});
+                (race -> {throw new BadRequestException("Esiste già una razza con questo nome: " + body.name());});
 
         Race race = new Race(body.name(), body.ageDescription(), body.alignmentDescription(),
                 body.sizeDescription(), body.speed());

@@ -53,6 +53,10 @@ public class BackgroundService {
         this.backgroundRepository.delete(found);
     }
 
+    public Background getBackgroundByName(String name) {
+      return this.backgroundRepository.findByName(name).orElseThrow(()-> new NotFoundException("Background con questo nome non trovato!"));
+    }
+
     //TODO AGGIUNGERE LE COMPETENZE, LA LISTA EQUIPAGGIAMENTO INIZIALE, E I TRATTI DI BACKGROUND
 
 }

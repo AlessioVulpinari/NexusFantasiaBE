@@ -56,6 +56,4 @@ public class FeatService {
     public Feat findByName(String name) {
         return featRepository.findByName(name).orElseThrow(() -> new NotFoundException("Talento con nome: " + name + " non trovato!"));
     }
-
-    //TODO AGGIUNGI METODI PER AGGIUNGERE LE INFO ALLA SCHEDA
 }

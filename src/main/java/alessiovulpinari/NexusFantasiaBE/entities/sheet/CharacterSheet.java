@@ -6,6 +6,7 @@ import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import alessiovulpinari.NexusFantasiaBE.entities.magics.Magic;
+import alessiovulpinari.NexusFantasiaBE.entities.races.Languages;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.enums.AbilityScoreDistribution;
@@ -33,8 +34,28 @@ public class CharacterSheet {
     @Enumerated(value = EnumType.STRING)
     private Alignment alignment;
 
-    @Column(name = "nome")
+    //PuntiVita da aggiungere o calcolati?
+
+    @Column(name = "nome", nullable = false)
     private String name;
+
+    @Column(name = "forza")
+    private int strength;
+
+    @Column(name = "destrezza")
+    private int dexterity;
+
+    @Column(name = "costituzione")
+    private int constitution;
+
+    @Column(name = "intelligenza")
+    private int intelligence;
+
+    @Column(name = "saggezza")
+    private int wisdom;
+
+    @Column(name = "carisma")
+    private int charisma;
 
     @Column(name = "età")
     private int age;
@@ -78,6 +99,10 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_classe"))
     private Set<Class> classList;
 
+    public void addClass(Class aClass) {
+        this.classList.add(aClass);
+    }
+
     // Sottoclassi
     @ManyToMany
     @JoinTable(
@@ -98,6 +123,10 @@ public class CharacterSheet {
     inverseJoinColumns = @JoinColumn(name = "id_competenza"))
     private Set<Proficiency> proficiencies;
 
+    public void addProficiencies(Set<Proficiency> proficiencies) {
+        this.getProficiencies().addAll(proficiencies);
+    }
+
     // ADD Race
     @ManyToOne
     @JoinColumn(name="id_razza")
@@ -112,6 +141,18 @@ public class CharacterSheet {
     @ManyToOne
     @JoinColumn(name = "id_background")
     private Background background;
+
+    // Languages
+    @ManyToMany
+    @JoinTable(name = "schede_linguaggi",
+            joinColumns = @JoinColumn(name = "id_scheda"),
+            inverseJoinColumns = @JoinColumn(name = "id_linguaggio")
+    )
+    private Set<Languages> languages;
+
+    public void addLanguages(Set<Languages> languages) {
+        this.getLanguages().addAll(languages);
+    }
 
     // ADD Feats
     @ManyToMany
@@ -134,8 +175,25 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     private List<Equipment> equipmentList;
 
+    public void addEquipment(Equipment equipment) {
+        this.getEquipmentList().add(equipment);
+    }
+
+    public void addEquipments(List<Equipment> equipments) {
+        this.getEquipmentList().addAll(equipments);
+    }
+
     public CharacterSheet(String name) {
         this.name = name;
+
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+        this.wisdom = 0;
+        this.charisma = 0;
+
+        this.languages = new HashSet<>();
         this.classList = new HashSet<>();
         this.subclassSet = new HashSet<>();
         this.proficiencies = new HashSet<>();

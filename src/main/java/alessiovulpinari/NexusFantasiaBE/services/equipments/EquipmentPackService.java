@@ -63,12 +63,12 @@ public class EquipmentPackService {
         return this.equipmentRepository.save(equipmentPack);
     }
 
-    public void removeEquipment(UUID equipmentPackId, EquipmentNameDTO body) {
+    public EquipmentPack removeEquipment(UUID equipmentPackId, EquipmentNameDTO body) {
         Equipment found = equipmentService.getEquipmentById(equipmentPackId);
 
         if (!(found instanceof EquipmentPack equipmentPack)) throw new BadRequestException("L'id inserito non è quello di un pacchetto iniziale!");
         Equipment equipment = equipmentService.findByName(body.name());
         equipmentPack.removeEquipToList(equipment);
-        this.equipmentRepository.save(equipmentPack);
+        return this.equipmentRepository.save(equipmentPack);
     }
 }

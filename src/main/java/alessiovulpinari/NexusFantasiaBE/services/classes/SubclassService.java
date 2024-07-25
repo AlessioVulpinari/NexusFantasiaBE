@@ -2,6 +2,8 @@ package alessiovulpinari.NexusFantasiaBE.services.classes;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.SubclassDTO;
@@ -65,6 +67,10 @@ public class SubclassService {
 
     public Subclass findByName(String subclassName) {
         return subclassRepository.findByName(subclassName).orElseThrow(() -> new NotFoundException("Sotto classe con nome: " + subclassName + " non trovata!"));
+    }
+
+    public SubclassLevel subClassLevelByLevelNumber(UUID subclassId, int levelNumber) {
+        return subclassRepository.classLevelByNumber(subclassId, levelNumber).orElseThrow(()-> new BadRequestException("Livello sotto classe non trovato!"));
     }
 
 

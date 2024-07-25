@@ -1,6 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.services.classes;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.ClassDTO;
@@ -56,5 +57,9 @@ public class ClassService {
 
     public Class findByClassName(String className){
         return this.classRepository.findByClassName(className).orElseThrow(() -> new NotFoundException("Classe con nome: " + className + " non trovato!"));
+    }
+
+    public Level getClassLevelByLevelNumber(UUID uuid, int level) {
+        return classRepository.classLevelByNumber(uuid, level).orElseThrow(()-> new BadRequestException("Non esiste il livello numero: " + level + " per questa classe!"));
     }
 }

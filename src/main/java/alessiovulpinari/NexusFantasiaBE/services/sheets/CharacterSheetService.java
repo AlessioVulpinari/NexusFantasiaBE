@@ -8,6 +8,8 @@ import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.Background;
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.CharacterSheet;
+import alessiovulpinari.NexusFantasiaBE.enums.AbilityScoreDistribution;
+import alessiovulpinari.NexusFantasiaBE.enums.Alignment;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
 import alessiovulpinari.NexusFantasiaBE.payloads.sheets.*;
@@ -89,23 +91,23 @@ public class CharacterSheetService {
         return this.characterSheetRepository.save(found);
     }
 
-    // Valuta se aggiungere direttamente al DTO la lista di linguaggi
-    public CharacterSheet changePersonalTraits(UUID characterSheetId, PersonalTraitsDTO body, Set<Languages> languagesSet) {
+    
+    public CharacterSheet changePersonalTraits(UUID characterSheetId, PersonalTraitsDTO body) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
         Background background = this.backgroundService.getBackgroundByName(body.backgroundName());
 
+        found.setAlignment(Alignment.valueOf(body.alignment()));
         found.setPersonalTraits(body.personalTraits());
         found.setIdeals(body.ideals());
         found.setBonds(body.bonds());
         found.setFlaw(body.flaw());
         found.setBackground(background);
 
-        // Da prendere nel DB?
         found.addEquipments(background.getEquipmentList());
         found.addProficiencies(background.getProficiencies());
 
-        if (!languagesSet.isEmpty() && background.getExtraLanguages() != 0) {
-            found.addLanguages(languagesSet);
+        if (!body.languagesSet().isEmpty() && background.getExtraLanguages() != 0) {
+            found.addLanguages(body.languagesSet());
         }
 
         return this.characterSheetRepository.save(found);
@@ -124,7 +126,6 @@ public class CharacterSheetService {
         found.addProficiencies(race.getProficiencies());
         found.addLanguages(race.getLanguages());
 
-        // Un modo migliore ?
         race.getIncrementedScoreMap().forEach(incrementedScore -> {
             switch (incrementedScore.getAbilityScore().getName()) {
                 case "forza":
@@ -193,7 +194,7 @@ public class CharacterSheetService {
         return this.characterSheetRepository.save(found);
     }
 
-    public int numbOfClassInACharacterSheet(UUID uuid, Class aClass) {
+    public int numbOfClassLevelsInACharacterSheet(UUID uuid, Class aClass) {
         return this.characterSheetRepository.classLevels(uuid, aClass).size();
     }
 
@@ -202,7 +203,7 @@ public class CharacterSheetService {
 
         Class aClass = this.classService.findByClassName(body.className());
 
-        int size = numbOfClassInACharacterSheet(characterSheetId, aClass);
+        int size = numbOfClassLevelsInACharacterSheet(characterSheetId, aClass);
 
         if (size == 0) {
             found.addClass(aClass);
@@ -210,26 +211,43 @@ public class CharacterSheetService {
             found.addEquipments(aClass.getEquipmentList());
         }
 
-        // Aggiungere livello classe
+        Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), size +1);
+        found.addLevel(level);
+
+        // Bonus competenza? da aggiungere alla scheda? o recuperarlo dal livello?
+        // Magie lanciabili recuperate dal livello?
+
 
         if (body.subclassName() != null && size >= aClass.getLevelForSubClass()) {
             Subclass subclass = this.subclassService.findByName(body.subclassName());
 
-            // Aggiungere bonus sottoclasse 
+            // Se la sotto classe non c'è nella scheda la aggiungiamo
+            List<Subclass> subclassSet = found.getSubclassSet().stream().filter(subclass1 -> subclass1.getName().equals(subclass.getName())).toList();
+            if (subclassSet.isEmpty()) {
+                found.addSubclass(subclass);
+            }
+
+            // altrimenti aggiungiamo solamente un livello della sotto classe se c'è!
+            try
+            {
+                found.addSubClassLevel(subclassService.subClassLevelByLevelNumber(subclass.getSubclassId(), size +1));
+            } catch (BadRequestException exception) {
+
+                System.out.println("Non esiste il livello: " + size + 1 + " per questa sotto classe!" );
+            }
+
+            // Gestire la magia?
+            // Magie lanciabili recuperate dal livello?
         }
-
-
 
         return this.characterSheetRepository.save(found);
     }
 
+    public CharacterSheet addAbilityScoreDistribution(UUID characterSheetId, AddAbilityScoreDistributionDTO body) {
+        CharacterSheet found = this.getCharacterSheetById(characterSheetId);
 
+        found.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
 
-    // Livello 1
-    /*TODO AGGIUNGI METODI PER AGGIUNGERE LE INFO ALLA SCHEDA (METODO PER RESTITUIRE LE SCHEDE DELL'UTENTE LOGGATO,
-       metodo per scegliere la classe e la sottoclasse
-       metodo per scegliere la distribuzione delle statistiche,
-     */
-
-
+        return this.characterSheetRepository.save(found);
+    }
 }

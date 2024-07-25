@@ -4,6 +4,7 @@ import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import alessiovulpinari.NexusFantasiaBE.entities.magics.Magic;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Languages;
@@ -111,11 +112,31 @@ public class CharacterSheet {
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
     private Set<Subclass> subclassSet;
 
+    public void addSubclass(Subclass subclass) {
+        this.subclassSet.add(subclass);
+    }
+
+    // Livelli sottoclasse
+    @ManyToMany
+    @JoinTable(name = "schede_livelli_sotto_classe",
+            joinColumns = @JoinColumn(name = "id_scheda"),
+            inverseJoinColumns = @JoinColumn(name = "id_livello"))
+    private Set<SubclassLevel> subclassLevels;
+
+    public void addSubClassLevel(SubclassLevel level) {
+        this.subclassLevels.add(level);
+    }
+
+
     // Livelli
     @ManyToMany
     @JoinTable(name = "schede_livelli", joinColumns = @JoinColumn(name = "id_scheda"),
     inverseJoinColumns = @JoinColumn(name = "id_livello"))
     private Set<Level> levels;
+
+    public void addLevel(Level level) {
+        this.levels.add(level);
+    }
 
     // Set of Proficiency
     @ManyToMany

@@ -1,9 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.controllers.equipments;
 
-import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import alessiovulpinari.NexusFantasiaBE.entities.equipments.WeaponProperty;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
-import alessiovulpinari.NexusFantasiaBE.payloads.equipments.EquipmentDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.equipments.WeaponPropertyDTO;
 import alessiovulpinari.NexusFantasiaBE.services.equipments.WeaponPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;

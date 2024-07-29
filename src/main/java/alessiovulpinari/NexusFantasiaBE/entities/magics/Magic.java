@@ -58,17 +58,41 @@ public class Magic {
             inverseJoinColumns = @JoinColumn(name = "id_componente"))
     private Set<MagicComponent> magicComponents;
 
+    public void addMagicComponent(MagicComponent magicComponent) {
+        this.magicComponents.add(magicComponent);
+    }
+
+    public void removeMagicComponent(MagicComponent magicComponent) {
+        this.magicComponents.remove(magicComponent);
+    }
+
     @ManyToMany
     @JoinTable(name = "magie_classi",
             joinColumns = @JoinColumn(name = "id_magia"),
             inverseJoinColumns = @JoinColumn(name = "id_classe"))
     private Set<Class> spellList;
 
+    public void addClassToSpellList(Class aClass) {
+        this.spellList.add(aClass);
+    }
+
+    public void removeClassToSpellList(Class aClass) {
+        this.spellList.remove(aClass);
+    }
+
     @ManyToMany
     @JoinTable(name = "magie_sotto_classi",
             joinColumns = @JoinColumn(name = "id_magia"),
             inverseJoinColumns = @JoinColumn(name = "id_sotto_classe"))
     private Set<Subclass> subClassSpellList;
+
+    public void addSubClassToSpellList(Subclass aClass) {
+        this.subClassSpellList.add(aClass);
+    }
+
+    public void removeSubClassToSpellList(Subclass aClass) {
+        this.subClassSpellList.remove(aClass);
+    }
 
     public Magic(String name, String description, int level, MagicSchool magicSchool, String castingTime, String range, String duration, String atHigherLevels, Boolean isRitual) {
         this.name = name;

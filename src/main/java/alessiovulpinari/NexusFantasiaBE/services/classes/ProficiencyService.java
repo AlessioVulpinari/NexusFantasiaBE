@@ -60,4 +60,8 @@ public class ProficiencyService {
         Proficiency found = getProficiencyById(proficiencyId);
         this.proficiencyRepository.delete(found);
     }
+
+    public Proficiency findByProficiencyName(String name) {
+        return this.proficiencyRepository.findByName(name).orElseThrow(()-> new NotFoundException("NNon esiste una competenza con questo nome!"));
+    }
 }

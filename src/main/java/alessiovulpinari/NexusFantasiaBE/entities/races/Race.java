@@ -47,6 +47,14 @@ public class Race {
     inverseJoinColumns = @JoinColumn(name = "id_tratto_razziale"))
     private Set<RacialTraits> racialTraits;
 
+    public void addRacialTrait(RacialTraits racialTrait) {
+        this.racialTraits.add(racialTrait);
+    }
+
+    public void removeRacialTrait(RacialTraits racialTrait) {
+        this.racialTraits.remove(racialTrait);
+    }
+
     // Lista di linguaggi parlati
     @ManyToMany
     @JoinTable(name = "razze_linguaggi",
@@ -54,15 +62,39 @@ public class Race {
             inverseJoinColumns = @JoinColumn(name = "id_linguaggio"))
     private Set<Languages> languages;
 
+    public void addLanguage(Languages languages) {
+        this.languages.add(languages);
+    }
+
+    public void removeLanguages(Languages languages) {
+        this.languages.remove(languages);
+    }
+
     // Lista di sotto razze
     @OneToMany(mappedBy = "race")
     private Set<Subrace> subraceSet;
+
+    public void addSubRace(Subrace subrace) {
+        this.subraceSet.add(subrace);
+    }
+
+    public void removeSubRace(Subrace subrace) {
+        this.subraceSet.remove(subrace);
+    }
 
     // Lista delle competenze aggiuntive
     @ManyToMany
     @JoinTable(name = "razze_competenze", joinColumns = @JoinColumn(name = "id_razza"),
             inverseJoinColumns = @JoinColumn(name = "id_competenza") )
     private Set<Proficiency> proficiencies;
+
+    public void addProficiency(Proficiency proficiency) {
+        this.proficiencies.add(proficiency);
+    }
+
+    public void removeProficiency(Proficiency proficiency) {
+        this.proficiencies.remove(proficiency);
+    }
 
     public Race(String name ,String ageDescription, String alignmentDescription, String sizeDescription, int speed) {
         this.name = name;

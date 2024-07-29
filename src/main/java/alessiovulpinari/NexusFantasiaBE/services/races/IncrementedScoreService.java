@@ -30,10 +30,7 @@ public class IncrementedScoreService {
     private AbilityScoreService abilityScoreService;
 
     @Autowired
-    private RaceService raceService;
-
-    @Autowired
-    private SubRaceService subRaceService;
+    private CommonRaceService commonRaceService;
 
     @Autowired
     private FeatService featService;
@@ -52,7 +49,7 @@ public class IncrementedScoreService {
     public IncrementedScore saveRaceIncrementedScore(IncrementedScoreRaceDTO body) {
 
         AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
-        Race race = raceService.findByName(body.raceName());
+        Race race = commonRaceService.findRaceByName(body.raceName());
         IncrementedScore incrementedScore = new IncrementedScore(abilityScore, body.incrementValue(), race );
 
         return incrementedScoreRepository.save(incrementedScore);
@@ -61,7 +58,7 @@ public class IncrementedScoreService {
     public IncrementedScore saveSubRaceIncrementedScore(IncrementedScoreSubRaceDTO body) {
 
         AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
-        Subrace race = subRaceService.findByName(body.subRaceName());
+        Subrace race = commonRaceService.findSubRaceByName(body.subRaceName());
         IncrementedScore incrementedScore = new IncrementedScore(abilityScore, body.incrementValue(), race );
 
         return incrementedScoreRepository.save(incrementedScore);
@@ -79,7 +76,7 @@ public class IncrementedScoreService {
 
         IncrementedScore found = getIncrementedScoreById(incrementedScoreId);
         AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
-        Race race = raceService.findByName(body.raceName());
+        Race race = commonRaceService.findRaceByName(body.raceName());
         found.setAbilityScore(abilityScore);
         found.setIncrementValue(body.incrementValue());
         found.setRace(race);
@@ -93,7 +90,7 @@ public class IncrementedScoreService {
 
         IncrementedScore found = getIncrementedScoreById(incrementedScoreId);
         AbilityScore abilityScore = abilityScoreService.findByName(body.abilityScoreName());
-        Subrace race = subRaceService.findByName(body.subRaceName());
+        Subrace race = commonRaceService.findSubRaceByName(body.subRaceName());
         found.setAbilityScore(abilityScore);
         found.setIncrementValue(body.incrementValue());
         found.setSubrace(race);

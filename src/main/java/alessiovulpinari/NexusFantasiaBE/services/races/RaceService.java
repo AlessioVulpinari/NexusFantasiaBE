@@ -1,10 +1,15 @@
 package alessiovulpinari.NexusFantasiaBE.services.races;
 
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
+import alessiovulpinari.NexusFantasiaBE.entities.races.Languages;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
+import alessiovulpinari.NexusFantasiaBE.entities.races.RacialTraits;
+import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
-import alessiovulpinari.NexusFantasiaBE.payloads.races.RaceDTO;
+import alessiovulpinari.NexusFantasiaBE.payloads.races.*;
 import alessiovulpinari.NexusFantasiaBE.repositories.races.RaceRepository;
+import alessiovulpinari.NexusFantasiaBE.services.classes.ProficiencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +23,18 @@ public class RaceService {
 
     @Autowired
     private RaceRepository raceRepository;
+
+    @Autowired
+    private RacialTraitService racialTraitService;
+
+    @Autowired
+    private LanguageService languageService;
+
+    @Autowired
+    private CommonRaceService commonRaceService;
+
+    @Autowired
+    private ProficiencyService proficiencyService;
 
     public Page<Race> getRaces(int pageNumber, int pageSize) {
         if (pageSize <= 0) pageSize =10;
@@ -57,9 +74,71 @@ public class RaceService {
         this.raceRepository.delete(found);
     }
 
-    //TODO SETTARE I TRATTI RAZZIALI, I LINGUAGGI, LE SOTTORAZZE E LE COMPETENZE
+    public Race addRacialTrait(UUID raceId, RacialTraitNameDTO racialTraitNameDTO) {
+        Race found = this.getRaceById(raceId);
+        RacialTraits racialTraits = racialTraitService.findByName(racialTraitNameDTO.racialTraitName());
+
+        found.addRacialTrait(racialTraits);
+        return  this.raceRepository.save(found);
+    }
+
+    public Race removeRacialTrait(UUID raceId, RacialTraitNameDTO racialTraitNameDTO) {
+        Race found = this.getRaceById(raceId);
+        RacialTraits racialTraits = racialTraitService.findByName(racialTraitNameDTO.racialTraitName());
+
+        found.removeRacialTrait(racialTraits);
+        return  this.raceRepository.save(found);
+    }
+
+    public Race addLanguage(UUID raceId, LanguageNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Languages languages = languageService.findByName(body.languageName());
+
+        found.addLanguage(languages);
+        return this.raceRepository.save(found);
+    }
+
+    public Race removeLanguage(UUID raceId, LanguageNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Languages languages = languageService.findByName(body.languageName());
+
+        found.removeLanguages(languages);
+        return this.raceRepository.save(found);
+    }
+
+    public Race addSubRace(UUID raceId, SubRaceNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Subrace subrace = commonRaceService.findSubRaceByName(body.subRaceName());
+
+        found.addSubRace(subrace);
+        return this.raceRepository.save(found);
+    }
+
+    public Race removeSubRace(UUID raceId, SubRaceNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Subrace subrace = commonRaceService.findSubRaceByName(body.subRaceName());
+
+        found.removeSubRace(subrace);
+        return this.raceRepository.save(found);
+    }
+
+    public Race addProficiency(UUID raceId, ProficiencyNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Proficiency proficiency = this.proficiencyService.findByProficiencyName(body.proficiencyName());
+
+        found.addProficiency(proficiency);
+        return this.raceRepository.save(found);
+    }
+
+    public Race removeProficiency(UUID raceId, ProficiencyNameDTO body) {
+        Race found = this.getRaceById(raceId);
+        Proficiency proficiency = this.proficiencyService.findByProficiencyName(body.proficiencyName());
+
+        found.removeProficiency(proficiency);
+        return this.raceRepository.save(found);
+    }
 
     public Race findByName (String name) {
-        return raceRepository.findByName(name).orElseThrow(()-> new NotFoundException("Razza con questo nome non trovata!"));
+        return commonRaceService.findRaceByName(name);
     }
 }

@@ -41,12 +41,28 @@ public class Subrace {
             inverseJoinColumns = @JoinColumn(name = "id_tratto_razziale"))
     private Set<RacialTraits> racialTraits;
 
+    public void addRacialTrait(RacialTraits racialTraits) {
+        this.racialTraits.add(racialTraits);
+    }
+
+    public void removeRacialTrait(RacialTraits racialTraits) {
+        this.racialTraits.remove(racialTraits);
+    }
+
     // Lista di linguaggi parlati
     @ManyToMany
     @JoinTable(name = "sotto_razze_linguaggi",
             joinColumns = @JoinColumn(name = "id_sotto_razza"),
             inverseJoinColumns = @JoinColumn(name = "id_linguaggio"))
     private Set<Languages> languages;
+
+    public void addLanguage(Languages languages) {
+        this.languages.add(languages);
+    }
+
+    public void removeLanguage(Languages languages) {
+        this.languages.remove(languages);
+    }
 
     public Subrace(String name, String description, Race race) {
         this.name = name;

@@ -11,4 +11,6 @@ import java.util.UUID;
 @Repository
 public interface ProficiencyRepository extends JpaRepository<Proficiency, UUID> {
     Optional<Proficiency> findByNameAndProficiencyType(String name, ProficiencyType proficiencyType);
+
+    Optional<Proficiency> findByName(String name);
 }

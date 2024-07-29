@@ -1,9 +1,13 @@
 package alessiovulpinari.NexusFantasiaBE.services.races;
 
+import alessiovulpinari.NexusFantasiaBE.entities.races.Languages;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Race;
+import alessiovulpinari.NexusFantasiaBE.entities.races.RacialTraits;
 import alessiovulpinari.NexusFantasiaBE.entities.races.Subrace;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
+import alessiovulpinari.NexusFantasiaBE.payloads.races.LanguageNameDTO;
+import alessiovulpinari.NexusFantasiaBE.payloads.races.RacialTraitNameDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.races.SubRaceDTO;
 import alessiovulpinari.NexusFantasiaBE.repositories.races.SubraceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,13 @@ public class SubRaceService {
     private SubraceRepository subraceRepository;
 
     @Autowired
-    private RaceService raceService;
+    private CommonRaceService commonRaceService;
+
+    @Autowired
+    private LanguageService languageService;
+
+    @Autowired
+    private RacialTraitService racialTraitService;
 
     public Page<Subrace> getSubRaces(int pageNumber, int pageSize) {
         if (pageSize <= 0) pageSize =10;
@@ -38,7 +48,7 @@ public class SubRaceService {
         this.subraceRepository.findByName(body.name()).ifPresent
                 (subrace -> {throw new BadRequestException("Esiste già una sotto razza con questo nome: " + body.name());});
 
-        Race race = raceService.findByName(body.raceName());
+        Race race = commonRaceService.findRaceByName(body.raceName());
 
         Subrace subrace = new Subrace(body.name(), body.description(), race);
          return subraceRepository.save(subrace);
@@ -47,7 +57,7 @@ public class SubRaceService {
     public Subrace findByIdAndUpdate(UUID subRaceId, SubRaceDTO body) {
 
         Subrace found = this.getSubRaceById(subRaceId);
-        Race race = this.raceService.findByName(body.raceName());
+        Race race = this.commonRaceService.findRaceByName(body.raceName());
 
         found.setName(body.name());
         found.setDescription(body.description());
@@ -61,7 +71,33 @@ public class SubRaceService {
         this.subraceRepository.delete(found);
     }
 
-    //TODO AGGIUNGERE I TRATTI RAZZIALI E AGGIUNGERE I LINGUAGGI
+    public Subrace addRacialTrait(UUID subRaceId, RacialTraitNameDTO body) {
+        Subrace subrace = getSubRaceById(subRaceId);
+        RacialTraits racialTraits = this.racialTraitService.findByName(body.racialTraitName());
+        subrace.addRacialTrait(racialTraits);
+        return this.subraceRepository.save(subrace);
+    }
+
+    public Subrace removeRacialTrait(UUID subRaceId, RacialTraitNameDTO body) {
+        Subrace subrace = getSubRaceById(subRaceId);
+        RacialTraits racialTraits = this.racialTraitService.findByName(body.racialTraitName());
+        subrace.removeRacialTrait(racialTraits);
+        return this.subraceRepository.save(subrace);
+    }
+
+    public Subrace addLanguage(UUID subRaceId, LanguageNameDTO body) {
+        Subrace subrace = getSubRaceById(subRaceId);
+        Languages found = this.languageService.findByName(body.languageName());
+        subrace.addLanguage(found);
+        return this.subraceRepository.save(subrace);
+    }
+
+    public Subrace removeLanguage(UUID subRaceId, LanguageNameDTO body) {
+        Subrace subrace = getSubRaceById(subRaceId);
+        Languages found = this.languageService.findByName(body.languageName());
+        subrace.removeLanguage(found);
+        return this.subraceRepository.save(subrace);
+    }
 
     public Subrace findByName(String name) {
         return subraceRepository.findByName(name).orElseThrow(() -> new NotFoundException("Sotto razza con nome: " + name + " non trovato!"));

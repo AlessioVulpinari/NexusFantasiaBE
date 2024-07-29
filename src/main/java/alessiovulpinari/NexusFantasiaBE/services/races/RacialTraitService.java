@@ -56,4 +56,8 @@ public class RacialTraitService {
         this.racialTraitRepository.delete(found);
     }
 
+    public RacialTraits findByName(String name) {
+       return this.racialTraitRepository.findByName(name).orElseThrow(() -> new NotFoundException("Tratto razziali con nome: " + name + " non trovato!"));
+    }
+
 }

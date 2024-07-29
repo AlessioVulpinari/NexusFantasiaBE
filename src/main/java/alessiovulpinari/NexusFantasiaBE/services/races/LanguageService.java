@@ -51,4 +51,8 @@ public class LanguageService {
         Languages found = getLanguageById(languageId);
         this.languageRepository.delete(found);
     }
+
+    public Languages findByName(String name) {
+      return this.languageRepository.findByName(name).orElseThrow(()-> new NotFoundException(name + " non trovato!"));
+    }
 }

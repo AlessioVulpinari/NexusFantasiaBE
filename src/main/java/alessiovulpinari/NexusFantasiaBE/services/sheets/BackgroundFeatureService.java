@@ -52,4 +52,8 @@ public class BackgroundFeatureService {
         this.backgroundFeatureRepository.delete(found);
     }
 
+    public BackgroundFeature findByName(String name) {
+        return this.backgroundFeatureRepository.findByName(name).orElseThrow(()-> new NotFoundException("Tratto razziale non trovato!"));
+    }
+
 }

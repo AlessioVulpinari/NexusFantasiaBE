@@ -1,10 +1,18 @@
 package alessiovulpinari.NexusFantasiaBE.services.sheets;
 
+import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
+import alessiovulpinari.NexusFantasiaBE.entities.equipments.Equipment;
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.Background;
+import alessiovulpinari.NexusFantasiaBE.entities.sheet.BackgroundFeature;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
+import alessiovulpinari.NexusFantasiaBE.payloads.equipments.EquipmentNameDTO;
+import alessiovulpinari.NexusFantasiaBE.payloads.races.ProficiencyNameDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.sheets.BackgroundDTO;
+import alessiovulpinari.NexusFantasiaBE.payloads.sheets.BackgroundFeatureNameDTO;
 import alessiovulpinari.NexusFantasiaBE.repositories.sheet.BackgroundRepository;
+import alessiovulpinari.NexusFantasiaBE.services.classes.ProficiencyService;
+import alessiovulpinari.NexusFantasiaBE.services.equipments.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +26,15 @@ public class BackgroundService {
 
     @Autowired
     private BackgroundRepository backgroundRepository;
+
+    @Autowired
+    private ProficiencyService proficiencyService;
+
+    @Autowired
+    private EquipmentService equipmentService;
+
+    @Autowired
+    private BackgroundFeatureService backgroundFeatureService;
 
     public Page<Background> getBackgrounds(int pageNumber, int pageSize) {
         if (pageSize <= 0) pageSize =10;
@@ -57,6 +74,52 @@ public class BackgroundService {
       return this.backgroundRepository.findByName(name).orElseThrow(()-> new NotFoundException("Background con questo nome non trovato!"));
     }
 
-    //TODO AGGIUNGERE LE COMPETENZE, LA LISTA EQUIPAGGIAMENTO INIZIALE, E I TRATTI DI BACKGROUND
+    public Background addProficiency(UUID backgroundId, ProficiencyNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        Proficiency proficiency = this.proficiencyService.findByProficiencyName(body.proficiencyName());
+
+        found.addProficiency(proficiency);
+        return this.backgroundRepository.save(found);
+    }
+
+    public Background removeProficiency(UUID backgroundId, ProficiencyNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        Proficiency proficiency = this.proficiencyService.findByProficiencyName(body.proficiencyName());
+
+        found.removeProficiency(proficiency);
+        return this.backgroundRepository.save(found);
+    }
+
+    public Background addEquipment(UUID backgroundId, EquipmentNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        Equipment equipment = this.equipmentService.findByName(body.name());
+
+        found.addEquipment(equipment);
+        return this.backgroundRepository.save(found);
+    }
+
+    public Background removeEquipment(UUID backgroundId, EquipmentNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        Equipment equipment = this.equipmentService.findByName(body.name());
+
+        found.removeEquipment(equipment);
+        return this.backgroundRepository.save(found);
+    }
+
+    public Background addBackgroundFeatures(UUID backgroundId, BackgroundFeatureNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        BackgroundFeature backgroundFeature = this.backgroundFeatureService.findByName(body.backgroundFeatureName());
+
+        found.addBackgroundFeature(backgroundFeature);
+        return this.backgroundRepository.save(found);
+    }
+
+    public Background removeBackgroundFeatures(UUID backgroundId, BackgroundFeatureNameDTO body) {
+        Background found = this.getBackgroundById(backgroundId);
+        BackgroundFeature backgroundFeature = this.backgroundFeatureService.findByName(body.backgroundFeatureName());
+
+        found.removeBackgroundFeature(backgroundFeature);
+        return this.backgroundRepository.save(found);
+    }
 
 }

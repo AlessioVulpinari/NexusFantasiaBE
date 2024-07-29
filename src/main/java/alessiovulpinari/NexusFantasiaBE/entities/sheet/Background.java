@@ -36,15 +36,39 @@ public class Background {
             inverseJoinColumns = @JoinColumn(name = "id_competenza"))
     private Set<Proficiency> proficiencies;
 
+    public void addProficiency(Proficiency proficiency) {
+        this.proficiencies.add(proficiency);
+    }
+
+    public void removeProficiency(Proficiency proficiency) {
+        this.proficiencies.remove(proficiency);
+    }
+
     @ManyToMany
     @JoinTable(name = "background_equipaggiamenti", joinColumns = @JoinColumn(name = "id_background")
             , inverseJoinColumns = @JoinColumn(name = "id_equipaggiamento"))
     private List<Equipment> equipmentList;
 
+    public void addEquipment(Equipment equipment) {
+        this.equipmentList.add(equipment);
+    }
+
+    public void removeEquipment(Equipment equipment) {
+        this.equipmentList.remove(equipment);
+    }
+
     @ManyToMany
     @JoinTable(name = "background_tratti", joinColumns = @JoinColumn(name = "id_background")
             , inverseJoinColumns = @JoinColumn(name = "id_tratti"))
     private Set<BackgroundFeature> backgroundFeatures;
+
+    public void addBackgroundFeature(BackgroundFeature backgroundFeature) {
+        this.backgroundFeatures.add(backgroundFeature);
+    }
+
+    public void removeBackgroundFeature(BackgroundFeature backgroundFeature) {
+        this.backgroundFeatures.remove(backgroundFeature);
+    }
 
     public Background(String name, String description, int extraLanguages) {
         this.name = name;

@@ -1,10 +1,8 @@
 package alessiovulpinari.NexusFantasiaBE.controllers.magics;
 
-import alessiovulpinari.NexusFantasiaBE.entities.magics.Magic;
 import alessiovulpinari.NexusFantasiaBE.entities.magics.MagicComponent;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.payloads.magics.MagicComponentDTO;
-import alessiovulpinari.NexusFantasiaBE.payloads.magics.MagicDTO;
 import alessiovulpinari.NexusFantasiaBE.services.magics.MagicComponentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

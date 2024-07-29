@@ -3,6 +3,7 @@ package alessiovulpinari.NexusFantasiaBE.controllers.classes;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.ProficiencyDTO;
+import alessiovulpinari.NexusFantasiaBE.payloads.sheets.ProficiencySkillDTO;
 import alessiovulpinari.NexusFantasiaBE.services.classes.ProficiencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,17 @@ public class ProficiencyController {
         return proficiencyService.saveProficiency(body);
     }
 
+    //TODO da sostituire con la risposta DTO
+    @PostMapping("/skills")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    Proficiency createSkillProficiency(@RequestBody @Validated ProficiencySkillDTO body, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult.getAllErrors());
+        }
+        return proficiencyService.saveSkillProficiency(body);
+    }
+
     @GetMapping
     Page<Proficiency> getAllProficiencies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return proficiencyService.getProficiencies(page, size);
@@ -59,5 +71,15 @@ public class ProficiencyController {
             throw new BadRequestException(bindingResult.getAllErrors());
         }
         return proficiencyService.findByIdAndUpdate(id, body);
+    }
+
+    @PutMapping("/skills/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
+    Proficiency updateSkillProficiency(@PathVariable UUID id, @Validated @RequestBody ProficiencySkillDTO body, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult.getAllErrors());
+        }
+        return proficiencyService.skillProficiencyFindByIdAndUpdate(id, body);
     }
 }

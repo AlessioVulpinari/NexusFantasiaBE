@@ -41,6 +41,9 @@ public class CharacterSheet {
     @Column(name = "nome", nullable = false)
     private String name;
 
+    @Column(name = "punti_vita")
+    private int hp;
+
     @Column(name = "forza")
     private int strength;
 
@@ -224,6 +227,7 @@ public class CharacterSheet {
     public CharacterSheet(String name) {
         this.name = name;
 
+        this.hp = 0;
         this.strength = 0;
         this.dexterity = 0;
         this.constitution = 0;

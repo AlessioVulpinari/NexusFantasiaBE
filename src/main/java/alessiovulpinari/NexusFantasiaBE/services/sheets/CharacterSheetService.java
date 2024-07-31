@@ -127,11 +127,21 @@ public class CharacterSheetService {
         // Quinto step
         characterSheet.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
 
+        // Sesto step
+        characterSheet.setStrength(characterSheet.getStrength() + body.strength());
+        characterSheet.setDexterity(characterSheet.getDexterity() + body.dexterity());
+        characterSheet.setConstitution(characterSheet.getConstitution() + body.constitution());
+        characterSheet.setWisdom(characterSheet.getWisdom() + body.wisdom());
+        characterSheet.setIntelligence(characterSheet.getIntelligence() + body.intelligence());
+        characterSheet.setCharisma(characterSheet.getCharisma() + body.charisma());
+
+        characterSheet.setHp(characterSheet.getConstitution() + aClass.getHitDice());
+
         return this.characterSheetRepository.save(characterSheet);
     }
 
     // questa dovrà diventare il metodo per la put
-    public CharacterSheet changeName(UUID characterSheetId, CharacterSheetDTO body, User user) {
+    public CharacterSheet updateCharacterSheet(UUID characterSheetId, CharacterSheetDTO body, User user) {
 
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
         if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
@@ -208,6 +218,16 @@ public class CharacterSheetService {
 
         // Quinto step
         found.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
+
+        // Sesto step
+        found.setStrength(found.getStrength() + body.strength());
+        found.setDexterity(found.getDexterity() + body.dexterity());
+        found.setConstitution(found.getConstitution() + body.constitution());
+        found.setWisdom(found.getWisdom() + body.wisdom());
+        found.setIntelligence(found.getIntelligence() + body.intelligence());
+        found.setCharisma(found.getCharisma() + body.charisma());
+
+        found.setHp(aClass.getHitDice() + found.getConstitution());
 
         return this.characterSheetRepository.save(found);
     }
@@ -319,10 +339,10 @@ public class CharacterSheetService {
 
         Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), size +1);
         found.addLevel(level);
+        found.setHp(found.getHp() + (aClass.getHitDice() / 2) + found.getConstitution());
 
         // Bonus competenza? da aggiungere alla scheda? o recuperarlo dal livello?
         // Magie lanciabili recuperate dal livello?
-
 
         if (body.subclassName() != null && size >= aClass.getLevelForSubClass()) {
             Subclass subclass = this.subclassService.findByName(body.subclassName());

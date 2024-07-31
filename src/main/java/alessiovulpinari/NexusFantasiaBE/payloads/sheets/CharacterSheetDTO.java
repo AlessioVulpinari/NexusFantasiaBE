@@ -24,5 +24,11 @@ public record CharacterSheetDTO(@NotEmpty(message = "Il nome del personaggio del
                                 @NotEmpty(message = "Il nome della razza non può essere vuoto!") String raceName,
                                 @NotEmpty(message = "Il nome della sotto razza non può essere vuoto!") String subRaceName,
                                 @NotEmpty(message = "Il nome della classe non può essere vuoto!") String className,
-                                String subclassName) {
+                                String subclassName,
+                                @NotNull(message = "La forza non può essere nulla!") Integer strength,
+                                @NotNull(message = "La destrezza non può essere nulla!") Integer dexterity,
+                                @NotNull(message = "La costituzione non può essere nulla!") Integer constitution,
+                                @NotNull(message = "L'intelligenza non può essere nulla!") Integer intelligence,
+                                @NotNull(message = "La saggezza non può essere nulla!") Integer wisdom,
+                                @NotNull(message = "Il carisma non può essere nullo!") Integer charisma) {
 }

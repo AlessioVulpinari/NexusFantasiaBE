@@ -154,6 +154,10 @@ public class CharacterSheet {
         this.getProficiencies().addAll(proficiencies);
     }
 
+    public void removeProficiencies(Set<Proficiency> proficiencies) {
+        this.getProficiencies().removeAll(proficiencies);
+    }
+
     // ADD Race
     @ManyToOne
     @JoinColumn(name="id_razza")
@@ -179,6 +183,10 @@ public class CharacterSheet {
 
     public void addLanguages(Set<Languages> languages) {
         this.getLanguages().addAll(languages);
+    }
+
+    public void removeLanguages(Set<Languages> languages) {
+        this.getLanguages().removeAll(languages);
     }
 
     // ADD Feats
@@ -208,6 +216,9 @@ public class CharacterSheet {
 
     public void addEquipments(List<Equipment> equipments) {
         this.getEquipmentList().addAll(equipments);
+    }
+    public void removeEquipments(List<Equipment> equipments) {
+        this.getEquipmentList().removeAll(equipments);
     }
 
     public CharacterSheet(String name) {

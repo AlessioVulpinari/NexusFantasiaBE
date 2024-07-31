@@ -25,9 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CharacterSheetService {
@@ -72,14 +70,144 @@ public class CharacterSheetService {
         CharacterSheet characterSheet = new CharacterSheet(body.name());
         characterSheet.setUser(user);
 
+        Background background = this.backgroundService.getBackgroundByName(body.backgroundName());
+
+        //primo step
+        characterSheet.setAge(body.age());
+        characterSheet.setHeight(body.height());
+        characterSheet.setWeight(body.weight());
+        characterSheet.setEyeColor(body.eyeColor());
+        characterSheet.setHairColor(body.hairColor());
+        characterSheet.setComplexion(body.complexion());
+
+        // secondo step
+        characterSheet.setAlignment(Alignment.valueOf(body.alignment()));
+        characterSheet.setPersonalTraits(body.personalTraits());
+        characterSheet.setIdeals(body.ideals());
+        characterSheet.setBonds(body.bonds());
+        characterSheet.setFlaw(body.flaw());
+        characterSheet.setBackground(background);
+
+        characterSheet.addEquipments(background.getEquipmentList());
+        characterSheet.addProficiencies(background.getProficiencies());
+
+        if (!body.languagesSet().isEmpty() && background.getExtraLanguages() != 0) {
+            characterSheet.addLanguages(body.languagesSet());
+        }
+
+        // terzo passaggio
+        this.setRaceAndSubRace(characterSheet, body);
+
+        // quarto passaggio
+        Class aClass = this.classService.findByClassName(body.className());
+        characterSheet.addClass(aClass);
+        characterSheet.addProficiencies(aClass.getClassProficiency());
+        characterSheet.addEquipments(aClass.getEquipmentList());
+
+        Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), 1);
+        characterSheet.addLevel(level);
+
+        if (body.subclassName() != null && aClass.getLevelForSubClass() == 1) {
+            Subclass subclass = this.subclassService.findByName(body.subclassName());
+            characterSheet.addSubclass(subclass);
+
+            // altrimenti aggiungiamo solamente un livello della sotto classe se c'è!
+            try
+            {
+                characterSheet.addSubClassLevel(subclassService.subClassLevelByLevelNumber(subclass.getSubclassId(), 1));
+            }
+            catch (BadRequestException exception) {
+                System.out.println("Non esiste il livello: " + 1 + " per questa sotto classe!" );
+            }
+
+            // Gestire la magia?
+            // Magie lanciabili recuperate dal livello?
+        }
+
+        // Quinto step
+        characterSheet.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
+
         return this.characterSheetRepository.save(characterSheet);
     }
 
+    // questa dovrà diventare il metodo per la put
     public CharacterSheet changeName(UUID characterSheetId, CharacterSheetDTO body, User user) {
 
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
         if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
         found.setName(body.name());
+        Background background = this.backgroundService.getBackgroundByName(body.backgroundName());
+
+        //primo step
+        found.setAge(body.age());
+        found.setHeight(body.height());
+        found.setWeight(body.weight());
+        found.setEyeColor(body.eyeColor());
+        found.setHairColor(body.hairColor());
+        found.setComplexion(body.complexion());
+
+        // secondo step
+        found.setAlignment(Alignment.valueOf(body.alignment()));
+        found.setPersonalTraits(body.personalTraits());
+        found.setIdeals(body.ideals());
+        found.setBonds(body.bonds());
+        found.setFlaw(body.flaw());
+
+        // aggiungere metodo per rimuovere gli equipaggiamenti e le competenze del background precedente
+        found.setEquipmentList(new ArrayList<>());
+        found.setProficiencies(new HashSet<>());
+        found.setLanguages(new HashSet<>());
+
+        found.setBackground(background);
+
+        found.addEquipments(background.getEquipmentList());
+        found.addProficiencies(background.getProficiencies());
+
+        if (!body.languagesSet().isEmpty() && background.getExtraLanguages() != 0) {
+            found.addLanguages(body.languagesSet());
+        }
+
+        // terzo passaggio
+        found.setStrength(0);
+        found.setDexterity(0);
+        found.setConstitution(0);
+        found.setIntelligence(0);
+        found.setWisdom(0);
+        found.setCharisma(0);
+
+        this.setRaceAndSubRace(found, body);
+
+        // quarto passaggio
+        found.setClassList(new HashSet<>());
+        found.setLevels(new HashSet<>());
+
+        Class aClass = this.classService.findByClassName(body.className());
+        found.addClass(aClass);
+        found.addProficiencies(aClass.getClassProficiency());
+        found.addEquipments(aClass.getEquipmentList());
+
+        Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), 1);
+        found.addLevel(level);
+
+        if (body.subclassName() != null && aClass.getLevelForSubClass() == 1) {
+            Subclass subclass = this.subclassService.findByName(body.subclassName());
+            found.addSubclass(subclass);
+
+            // altrimenti aggiungiamo solamente un livello della sotto classe se c'è!
+            try
+            {
+                found.addSubClassLevel(subclassService.subClassLevelByLevelNumber(subclass.getSubclassId(), 1));
+            }
+            catch (BadRequestException exception) {
+                System.out.println("Non esiste il livello: " + 1 + " per questa sotto classe!" );
+            }
+
+            // Gestire la magia?
+            // Magie lanciabili recuperate dal livello?
+        }
+
+        // Quinto step
+        found.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
 
         return this.characterSheetRepository.save(found);
     }
@@ -91,48 +219,8 @@ public class CharacterSheetService {
         this.characterSheetRepository.delete(found);
     }
 
-    public CharacterSheet changePhysicalTraits(UUID characterSheetId, PhysicalTraitsDTO body, User user) {
-        CharacterSheet found = this.getCharacterSheetById(characterSheetId);
 
-        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
-
-        found.setAge(body.age());
-        found.setHeight(body.height());
-        found.setWeight(body.weight());
-        found.setEyeColor(body.eyeColor());
-        found.setHairColor(body.hairColor());
-        found.setComplexion(body.complexion());
-
-        return this.characterSheetRepository.save(found);
-    }
-
-    
-    public CharacterSheet changePersonalTraits(UUID characterSheetId, PersonalTraitsDTO body, User user) {
-        CharacterSheet found = this.getCharacterSheetById(characterSheetId);
-        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
-        Background background = this.backgroundService.getBackgroundByName(body.backgroundName());
-
-        found.setAlignment(Alignment.valueOf(body.alignment()));
-        found.setPersonalTraits(body.personalTraits());
-        found.setIdeals(body.ideals());
-        found.setBonds(body.bonds());
-        found.setFlaw(body.flaw());
-        found.setBackground(background);
-
-        found.addEquipments(background.getEquipmentList());
-        found.addProficiencies(background.getProficiencies());
-
-        if (!body.languagesSet().isEmpty() && background.getExtraLanguages() != 0) {
-            found.addLanguages(body.languagesSet());
-        }
-
-        return this.characterSheetRepository.save(found);
-    }
-
-    public CharacterSheet setRaceAndSubRace(UUID characterSheetId, AddRaceDTO body, User user) {
-        CharacterSheet found = this.getCharacterSheetById(characterSheetId);
-        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
-
+    public void setRaceAndSubRace(CharacterSheet found, CharacterSheetDTO body) {
         Race race = raceService.findByName(body.raceName());
         Subrace subrace = subRaceService.findByName(body.subRaceName());
 
@@ -208,13 +296,13 @@ public class CharacterSheetService {
 
         found.addLanguages(subrace.getLanguages());
 
-        return this.characterSheetRepository.save(found);
     }
 
     public int numbOfClassLevelsInACharacterSheet(UUID uuid, Class aClass) {
         return this.characterSheetRepository.classLevels(uuid, aClass).size();
     }
 
+    // Livelli successivi all'uno
     public CharacterSheet addClassLevel(UUID characterSheetId, AddClassDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
         if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
@@ -261,12 +349,4 @@ public class CharacterSheetService {
         return this.characterSheetRepository.save(found);
     }
 
-    public CharacterSheet addAbilityScoreDistribution(UUID characterSheetId, AddAbilityScoreDistributionDTO body, User user) {
-        CharacterSheet found = this.getCharacterSheetById(characterSheetId);
-        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
-
-        found.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
-
-        return this.characterSheetRepository.save(found);
-    }
 }

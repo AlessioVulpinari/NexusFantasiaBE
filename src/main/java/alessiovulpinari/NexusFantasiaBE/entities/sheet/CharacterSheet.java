@@ -1,5 +1,6 @@
 package alessiovulpinari.NexusFantasiaBE.entities.sheet;
 
+import alessiovulpinari.NexusFantasiaBE.entities.User;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Proficiency;
@@ -87,6 +88,11 @@ public class CharacterSheet {
 
     @Column(name = "difetti")
     private String flaw;
+
+    //User
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
     // ADD Distribuzione Caratteristiche
     @Column(name = "distribuzione_caratteristiche")

@@ -50,11 +50,12 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "id_ruolo"))
     Set<UserRole> userRoles;
 
-    @ManyToMany
-    @JoinTable(name = "utenti_schede",
-            joinColumns = @JoinColumn(name = "id_utente"),
-            inverseJoinColumns = @JoinColumn(name = "id_scheda"))
-    Set<CharacterSheet> characterSheets;
+    //TODO modificare a Many to One
+//    @ManyToMany
+//    @JoinTable(name = "utenti_schede",
+//            joinColumns = @JoinColumn(name = "id_utente"),
+//            inverseJoinColumns = @JoinColumn(name = "id_scheda"))
+//    Set<CharacterSheet> characterSheets;
 
     public User(String username, String email, String password, String name, String surname) {
         this.username = username;
@@ -64,7 +65,7 @@ public class User implements UserDetails {
         this.surname = surname;
         this.avatar = "https://ui-avatars.com/api/?name=" + this.getName() + "+" + this.getSurname();
         this.userRoles = new HashSet<>();
-        this.characterSheets = new HashSet<>();
+//        this.characterSheets = new HashSet<>();
     }
 
     public void addRole (UserRole role) {

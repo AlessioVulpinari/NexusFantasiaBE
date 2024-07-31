@@ -1,5 +1,6 @@
 package alessiovulpinari.NexusFantasiaBE.services.sheets;
 
+import alessiovulpinari.NexusFantasiaBE.entities.User;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
@@ -56,30 +57,44 @@ public class CharacterSheetService {
         return characterSheetRepository.findAll(pageable);
     }
 
+    public Page<CharacterSheet> getAllUserCharacterSheets(int pageNumber, int pageSize, User user) {
+        if (pageSize <= 0) pageSize =10;
+        if (pageSize >= 50) pageSize = 50;
+        Pageable pageable= PageRequest.of(pageNumber, pageSize);
+        return characterSheetRepository.findByUser(user, pageable);
+    }
+
     public CharacterSheet getCharacterSheetById(UUID uuid) {
         return characterSheetRepository.findById(uuid).orElseThrow(() -> new NotFoundException("Nessuna scheda personaggio con questo id trovata!"));
     }
 
-    public CharacterSheet saveCharacterSheet(CharacterSheetDTO body) {
+    public CharacterSheet saveCharacterSheet(CharacterSheetDTO body, User user) {
         CharacterSheet characterSheet = new CharacterSheet(body.name());
+        characterSheet.setUser(user);
+
         return this.characterSheetRepository.save(characterSheet);
     }
 
-    public CharacterSheet changeName(UUID characterSheetId, CharacterSheetDTO body) {
+    public CharacterSheet changeName(UUID characterSheetId, CharacterSheetDTO body, User user) {
 
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
         found.setName(body.name());
 
         return this.characterSheetRepository.save(found);
     }
 
-    public void findByIdAndDelete(UUID characterSheetId) {
+    public void findByIdAndDelete(UUID characterSheetId, User user) {
         CharacterSheet found = getCharacterSheetById(characterSheetId);
+
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi cancellare solo delle schede che ti appartengono!");
         this.characterSheetRepository.delete(found);
     }
 
-    public CharacterSheet changePhysicalTraits(UUID characterSheetId, PhysicalTraitsDTO body) {
+    public CharacterSheet changePhysicalTraits(UUID characterSheetId, PhysicalTraitsDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
 
         found.setAge(body.age());
         found.setHeight(body.height());
@@ -92,8 +107,9 @@ public class CharacterSheetService {
     }
 
     
-    public CharacterSheet changePersonalTraits(UUID characterSheetId, PersonalTraitsDTO body) {
+    public CharacterSheet changePersonalTraits(UUID characterSheetId, PersonalTraitsDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
         Background background = this.backgroundService.getBackgroundByName(body.backgroundName());
 
         found.setAlignment(Alignment.valueOf(body.alignment()));
@@ -113,8 +129,9 @@ public class CharacterSheetService {
         return this.characterSheetRepository.save(found);
     }
 
-    public CharacterSheet setRaceAndSubRace(UUID characterSheetId, AddRaceDTO body) {
+    public CharacterSheet setRaceAndSubRace(UUID characterSheetId, AddRaceDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
 
         Race race = raceService.findByName(body.raceName());
         Subrace subrace = subRaceService.findByName(body.subRaceName());
@@ -198,8 +215,9 @@ public class CharacterSheetService {
         return this.characterSheetRepository.classLevels(uuid, aClass).size();
     }
 
-    public CharacterSheet addClassLevel(UUID characterSheetId, AddClassDTO body) {
+    public CharacterSheet addClassLevel(UUID characterSheetId, AddClassDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
 
         Class aClass = this.classService.findByClassName(body.className());
 
@@ -243,8 +261,9 @@ public class CharacterSheetService {
         return this.characterSheetRepository.save(found);
     }
 
-    public CharacterSheet addAbilityScoreDistribution(UUID characterSheetId, AddAbilityScoreDistributionDTO body) {
+    public CharacterSheet addAbilityScoreDistribution(UUID characterSheetId, AddAbilityScoreDistributionDTO body, User user) {
         CharacterSheet found = this.getCharacterSheetById(characterSheetId);
+        if (!(found.getUser().getUserId() == user.getUserId())) throw new BadRequestException("Puoi modificare solo delle schede che ti appartengono!");
 
         found.setAbilityScoreDistribution(AbilityScoreDistribution.valueOf(body.abilityScoreDistribution()));
 

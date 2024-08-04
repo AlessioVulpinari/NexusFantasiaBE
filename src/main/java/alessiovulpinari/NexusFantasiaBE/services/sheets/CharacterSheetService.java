@@ -106,6 +106,7 @@ public class CharacterSheetService {
 
         Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), 1);
         characterSheet.addLevel(level);
+        characterSheet.setProficiencyBonus(level.getProficiencyBonus());
 
         if (body.subclassName() != null && aClass.getLevelForSubClass() == 1) {
             Subclass subclass = this.subclassService.findByName(body.subclassName());
@@ -190,6 +191,7 @@ public class CharacterSheetService {
         // quarto passaggio
         found.setClassList(new HashSet<>());
         found.setLevels(new HashSet<>());
+        found.setProficiencyBonus(0);
 
         Class aClass = this.classService.findByClassName(body.className());
         found.addClass(aClass);
@@ -198,6 +200,7 @@ public class CharacterSheetService {
 
         Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), 1);
         found.addLevel(level);
+        found.setProficiencyBonus(found.getProficiencyBonus() + level.getProficiencyBonus());
 
         if (body.subclassName() != null && aClass.getLevelForSubClass() == 1) {
             Subclass subclass = this.subclassService.findByName(body.subclassName());
@@ -340,8 +343,8 @@ public class CharacterSheetService {
         Level level = classService.getClassLevelByLevelNumber(aClass.getClassId(), size +1);
         found.addLevel(level);
         found.setHp(found.getHp() + (aClass.getHitDice() / 2) + found.getConstitution());
+        found.setProficiencyBonus(found.getProficiencyBonus() + level.getProficiencyBonus());
 
-        // Bonus competenza? da aggiungere alla scheda? o recuperarlo dal livello?
         // Magie lanciabili recuperate dal livello?
 
         if (body.subclassName() != null && size >= aClass.getLevelForSubClass()) {

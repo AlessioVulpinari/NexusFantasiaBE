@@ -2,6 +2,7 @@ package alessiovulpinari.NexusFantasiaBE.controllers.classes.levels;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.exceptions.BadRequestException;
+import alessiovulpinari.NexusFantasiaBE.payloads.classes.ClassFeatureNameDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.levels.*;
 import alessiovulpinari.NexusFantasiaBE.services.classes.levels.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,16 @@ public class LevelController {
             throw new BadRequestException(bindingResult.getAllErrors());
         }
         return levelService.findByIdAndUpdate(id, body);
+    }
+
+    @PutMapping("/{id}/features/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
+    Level addFeature(@PathVariable UUID id, @Validated @RequestBody ClassFeatureNameDTO body, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult.getAllErrors());
+        }
+        return levelService.addClassFeature(id, body);
     }
 
     @PutMapping("caster/{id}")

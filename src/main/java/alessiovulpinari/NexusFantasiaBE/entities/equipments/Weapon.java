@@ -18,10 +18,10 @@ import java.util.Set;
 @Entity
 public class Weapon extends Equipment {
 
-    @Column(name = "numero_dadi_danno", nullable = false)
+    @Column(name = "numero_dadi_danno")
     private int numberOfDamageDice;
 
-    @Column(name = "dado_danno", nullable = false)
+    @Column(name = "dado_danno")
     private int damageDice;
 
     @Column(name = "tipologia_arma")

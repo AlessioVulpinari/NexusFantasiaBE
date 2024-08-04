@@ -12,11 +12,11 @@ import lombok.Setter;
 @Entity
 public class ArmorAndShield extends Equipment {
 
-    @Column(name = "tipo_protezione", nullable = false)
+    @Column(name = "tipo_protezione")
     @Enumerated(value = EnumType.STRING)
     private ProtectionType protectionType;
 
-    @Column(name = "classe_armatura", nullable = false)
+    @Column(name = "classe_armatura")
     private int armorClass;
 
     @Column(name = "forza_richiesta")

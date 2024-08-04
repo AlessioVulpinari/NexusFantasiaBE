@@ -2,6 +2,8 @@ package alessiovulpinari.NexusFantasiaBE.entities.classes.levels;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Class;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.ClassFeature;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,7 @@ public class Level {
     @Column(name = "bonus_competenza", nullable = false)
     private int proficiencyBonus;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_classe")
     private Class aClass;
@@ -39,6 +42,10 @@ public class Level {
             joinColumns = @JoinColumn(name = "id_livello"),
             inverseJoinColumns = @JoinColumn(name = "id_tratto"))
     Set<ClassFeature> classFeatures;
+
+    public void addClassFeature(ClassFeature classFeature) {
+        this.classFeatures.add(classFeature);
+    }
 
     public Level(int levelNumber, int proficiencyBonus, Class aClass) {
         this.levelNumber = levelNumber;

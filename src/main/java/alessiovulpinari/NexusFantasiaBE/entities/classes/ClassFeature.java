@@ -22,7 +22,7 @@ public class ClassFeature {
     @Column(name = "nome_tratto_classe" , nullable = false)
     private String classFeatureName;
 
-    @Column(name = "descrizione_tratto_classe" , nullable = false)
+    @Column(name = "descrizione_tratto_classe" , nullable = false, length = 3000)
     private String classFeatureDescription;
 
     public ClassFeature(String classFeatureName, String classFeatureDescription) {

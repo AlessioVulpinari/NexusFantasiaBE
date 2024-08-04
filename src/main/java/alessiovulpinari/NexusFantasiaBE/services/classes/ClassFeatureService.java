@@ -34,7 +34,7 @@ public class ClassFeatureService {
         this.classFeatureRepository.findByClassFeatureName(body.classFeatureName()).ifPresent
                 (feature -> {throw new BadRequestException("Esiste già un tratto con questo nome: " + body.classFeatureName());});
 
-        ClassFeature newClass = new ClassFeature();
+        ClassFeature newClass = new ClassFeature(body.classFeatureName(), body.classFeatureDescription());
 
         return classFeatureRepository.save(newClass);
     }

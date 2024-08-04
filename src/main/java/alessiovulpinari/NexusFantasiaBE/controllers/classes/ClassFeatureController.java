@@ -62,4 +62,5 @@ public class ClassFeatureController {
         }
         return classFeatureService.findByIdAndUpdate(id, body);
     }
+
 }

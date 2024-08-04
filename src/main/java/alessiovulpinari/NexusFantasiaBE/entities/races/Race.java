@@ -23,6 +23,9 @@ public class Race {
     @Column(name = "id_razza", nullable = false)
     private UUID raceId;
 
+    @Column(name = "descrizione", nullable = false, length = 3000)
+    private String description;
+
     @Column(name = "nome", nullable = false)
     private String name;
 
@@ -96,8 +99,9 @@ public class Race {
         this.proficiencies.remove(proficiency);
     }
 
-    public Race(String name ,String ageDescription, String alignmentDescription, String sizeDescription, int speed) {
+    public Race(String name ,String description, String ageDescription, String alignmentDescription, String sizeDescription, int speed) {
         this.name = name;
+        this.description = description;
         this.ageDescription = ageDescription;
         this.alignmentDescription = alignmentDescription;
         this.sizeDescription = sizeDescription;

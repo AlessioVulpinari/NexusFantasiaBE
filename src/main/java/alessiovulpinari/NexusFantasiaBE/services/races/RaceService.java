@@ -51,7 +51,7 @@ public class RaceService {
         this.raceRepository.findByName(body.name()).ifPresent
                 (race -> {throw new BadRequestException("Esiste già una razza con questo nome: " + body.name());});
 
-        Race race = new Race(body.name(), body.ageDescription(), body.alignmentDescription(),
+        Race race = new Race(body.name(), body.description(), body.ageDescription(), body.alignmentDescription(),
                 body.sizeDescription(), body.speed());
 
         return  this.raceRepository.save(race);
@@ -61,6 +61,7 @@ public class RaceService {
 
         Race found = this.getRaceById(raceId);
         found.setName(body.name());
+        found.setDescription(body.description());
         found.setAgeDescription(body.ageDescription());
         found.setAlignmentDescription(body.alignmentDescription());
         found.setSizeDescription(body.sizeDescription());

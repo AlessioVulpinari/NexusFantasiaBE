@@ -25,7 +25,7 @@ public class Subrace {
     @Column(name = "nome", nullable = false)
     private String name;
 
-    @Column(name = "descrizione", nullable = false)
+    @Column(name = "descrizione", nullable = false, length = 3000)
     private String description;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities.races;
 
 import alessiovulpinari.NexusFantasiaBE.entities.sheet.AbilityScore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Subrace {
     @Column(name = "descrizione", nullable = false, length = 3000)
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_race", nullable = false)
     private Race race;

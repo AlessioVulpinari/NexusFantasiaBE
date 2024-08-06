@@ -2,8 +2,10 @@ package alessiovulpinari.NexusFantasiaBE.services.classes.levels;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.ClassFeature;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
+import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.Level;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
 import alessiovulpinari.NexusFantasiaBE.exceptions.NotFoundException;
+import alessiovulpinari.NexusFantasiaBE.payloads.classes.ClassFeatureNameDTO;
 import alessiovulpinari.NexusFantasiaBE.payloads.classes.levels.SubClassLevelDTO;
 import alessiovulpinari.NexusFantasiaBE.repositories.classes.SubclassLevelRepository;
 import alessiovulpinari.NexusFantasiaBE.services.classes.ClassFeatureService;
@@ -67,4 +69,12 @@ public class SubClassLevelService {
         SubclassLevel found = this.getLevelById(levelId);
         this.subclassLevelRepository.delete(found);
     }
+
+//    public SubclassLevel setClassFeature(UUID levelId, ClassFeatureNameDTO body) {
+//        SubclassLevel found =  this.getLevelById(levelId);
+//        ClassFeature classFeature = this.classFeatureService.findByFeatureName(body.name());
+//
+//        found.setClassFeature(classFeature);
+//        return subclassLevelRepository.save(found);
+//    }
 }

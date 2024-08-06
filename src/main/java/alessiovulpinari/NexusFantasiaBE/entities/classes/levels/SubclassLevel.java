@@ -2,6 +2,7 @@ package alessiovulpinari.NexusFantasiaBE.entities.classes.levels;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.ClassFeature;
 import alessiovulpinari.NexusFantasiaBE.entities.classes.Subclass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +26,11 @@ public class SubclassLevel {
     private int levelNumber;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "tratto_sottoclasse")
+    @JoinColumn(name = "tratto_sottoclasse_id")
+    // @PrimaryKeyJoinColumn(name = "tratto_sottoclasse")
     private ClassFeature classFeature;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_sotto_classe")
     private Subclass subclass;

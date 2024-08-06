@@ -1,6 +1,7 @@
 package alessiovulpinari.NexusFantasiaBE.entities.classes;
 
 import alessiovulpinari.NexusFantasiaBE.entities.classes.levels.SubclassLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +26,10 @@ public class Subclass {
     @Column(name = "nome_sottoclasse", nullable = false)
     private String name;
 
-    @Column(name = "descrizione_sottoclasse", nullable = false)
+    @Column(name = "descrizione_sottoclasse", nullable = false, length = 3000)
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_classe", nullable=false)
     private Class aClass;

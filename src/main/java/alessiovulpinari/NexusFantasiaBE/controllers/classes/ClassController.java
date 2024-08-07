@@ -36,7 +36,7 @@ public class ClassController {
     }
 
     @GetMapping
-    Page<Class> getAllLevels(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    Page<Class> getAllLevels(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         return classService.getClasses(page, size);
     }
 

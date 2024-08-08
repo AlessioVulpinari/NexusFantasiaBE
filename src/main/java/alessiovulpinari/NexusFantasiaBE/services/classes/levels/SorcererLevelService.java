@@ -15,6 +15,7 @@ import java.util.UUID;
 @Service
 public class SorcererLevelService {
 
+    @Autowired
     private LevelRepository levelRepository;
 
     @Autowired
